@@ -1,0 +1,36 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "InApp";
+
+import "Purchase.proto";
+import "Unsorted.proto";
+
+message InAppNotificationData {
+	optional string checkoutOrderId = 1;
+	optional string inAppNotificationId = 2;
+}
+
+message InAppPurchaseInformationRequestProto {
+	optional SignatureHashProto signatureHash = 1;
+	optional int64 nonce = 2;
+	repeated string notificationId = 3;
+	optional string signatureAlgorithm = 4;
+	optional int32 billingApiVersion = 5;
+}
+
+message InAppPurchaseInformationResponseProto {
+	optional SignedDataProto signedResponse = 1;
+	repeated StatusBarNotificationProto statusBarNotification = 2;
+	optional PurchaseResultProto purchaseResult = 3;
+}
+
+message InAppRestoreTransactionsRequestProto {
+	optional SignatureHashProto signatureHash = 1;
+	optional int64 nonce = 2;
+	optional string signatureAlgorithm = 3;
+	optional int32 billingApiVersion = 4;
+}
+
+message InAppRestoreTransactionsResponseProto {
+	optional SignedDataProto signedResponse = 1;
+	optional PurchaseResultProto purchaseResult = 2;
+}

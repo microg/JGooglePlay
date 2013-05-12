@@ -1,0 +1,17 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Log";
+
+message ClickLogEvent {
+	optional int64 eventTime = 1;
+	optional string url = 2;
+	optional string listId = 3;
+	optional string referrerUrl = 4;
+	optional string referrerListId = 5;
+}
+
+message LogRequest {
+	repeated ClickLogEvent clickEvent = 1;
+}
+
+message LogResponse {
+}

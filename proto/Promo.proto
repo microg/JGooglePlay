@@ -1,0 +1,30 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Promo";
+
+import "BadgeImage.proto";
+
+message AddCreditCardPromoOffer {
+	optional string headerText = 1;
+	optional string descriptionHtml = 2;
+	optional Image image = 3;
+	optional string introductoryTextHtml = 4;
+	optional string offerTitle = 5;
+	optional string noActionDescription = 6;
+	optional string termsAndConditionsHtml = 7;
+}
+
+message AvailablePromoOffer {
+	optional AddCreditCardPromoOffer addCreditCardOffer = 1;
+}
+
+message CheckPromoOfferResponse {
+	repeated AvailablePromoOffer availableOffer = 1;
+	optional RedeemedPromoOffer redeemedOffer = 2;
+	optional bool checkoutTokenRequired = 3;
+}
+
+message RedeemedPromoOffer {
+	optional string headerText = 1;
+	optional string descriptionHtml = 2;
+	optional Image image = 3;
+}

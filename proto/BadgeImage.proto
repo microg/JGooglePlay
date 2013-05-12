@@ -1,0 +1,52 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "BadgeImage";
+
+message Badge {
+	optional string title = 1;
+	repeated Image image = 2;
+	optional string browseUrl = 3;
+}
+
+message ExternalBadgeImageProto {
+	optional int32 usage = 1;
+	optional string url = 2;
+}
+
+message ExternalBadgeProto {
+	optional string localizedTitle = 1;
+	optional string localizedDescription = 2;
+	repeated ExternalBadgeImageProto badgeImage = 3;
+	optional string searchId = 4;
+}
+
+message GetImageRequestProto {
+	optional string assetId = 1;
+	optional int32 imageUsage = 3;
+	optional string imageId = 4;
+	optional int32 screenPropertyWidth = 5;
+	optional int32 screenPropertyHeight = 6;
+	optional int32 screenPropertyDensity = 7;
+	optional int32 productType = 8;
+}
+
+message GetImageResponseProto {
+	optional bytes imageData = 1;
+	optional int32 imageDensity = 2;
+}
+
+message Image {
+	optional int32 imageType = 1;
+	optional group Dimension = 2 {
+		optional int32 width = 3;
+		optional int32 height = 4;
+	}
+	optional string imageUrl = 5;
+	optional string altTextLocalized = 6;
+	optional string secureUrl = 7;
+	optional int32 positionInSequence = 8;
+	optional bool supportsFifeUrlOptions = 9;
+	optional group Citation = 10 {
+		optional string titleLocalized = 11;
+		optional string url = 12;
+	}
+}

@@ -1,0 +1,40 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Instruments";
+
+import "BillingAddress.proto";
+import "Carrier.proto";
+import "Challenges.proto";
+import "CreditCard.proto";
+import "Promo.proto";
+
+message CheckInstrumentResponse {
+	optional bool userHasValidInstrument = 1;
+	optional bool checkoutTokenRequired = 2;
+	repeated Instrument instrument = 4;
+	repeated Instrument eligibleInstrument = 5;
+}
+
+message Instrument {
+	optional string instrumentId = 1;
+	optional Address billingAddress = 2;
+	optional CreditCardInstrument creditCard = 3;
+	optional CarrierBillingInstrument carrierBilling = 4;
+	optional BillingAddressSpec billingAddressSpec = 5;
+	optional int32 instrumentFamily = 6;
+	optional CarrierBillingInstrumentStatus carrierBillingStatus = 7;
+	optional string displayTitle = 8;
+}
+
+message UpdateInstrumentRequest {
+	optional Instrument instrument = 1;
+	optional string checkoutToken = 2;
+}
+
+message UpdateInstrumentResponse {
+	optional int32 result = 1;
+	optional string instrumentId = 2;
+	optional string userMessageHtml = 3;
+	repeated InputValidationError errorInputField = 4;
+	optional bool checkoutTokenRequired = 5;
+	optional RedeemedPromoOffer redeemedOffer = 6;
+}

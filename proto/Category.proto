@@ -1,0 +1,35 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Category";
+
+import "Asset.proto";
+
+message CategoryProto {
+	optional int32 assetType = 2;
+	optional string categoryId = 3;
+	optional string categoryDisplay = 4;
+	optional string categorySubtitle = 5;
+	repeated string promotedAssetsNew = 6;
+	repeated string promotedAssetsHome = 7;
+	repeated CategoryProto subCategories = 8;
+	repeated string promotedAssetsPaid = 9;
+	repeated string promotedAssetsFree = 10;
+}
+
+message GetCategoriesRequestProto {
+	optional bool prefetchPromoData = 1;
+}
+
+message GetCategoriesResponseProto {
+	repeated CategoryProto categories = 1;
+}
+
+message GetSubCategoriesRequestProto {
+	optional int32 assetType = 1;
+}
+
+message GetSubCategoriesResponseProto {
+	repeated group SubCategory = 1 {
+		optional string subCategoryDisplay = 2;
+		optional string subCategoryId = 3;
+	}
+}

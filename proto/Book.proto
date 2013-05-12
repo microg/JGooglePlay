@@ -1,0 +1,38 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Book";
+
+import "DocumentId.proto";
+
+message BookAuthor {
+	optional string name = 1;
+	optional string deprecatedQuery = 2;
+	optional Docid docid = 3;
+}
+
+message BookDetails {
+	repeated BookSubject subject = 3;
+	optional string publisher = 4;
+	optional string publicationDate = 5;
+	optional string isbn = 6;
+	optional int32 numberOfPages = 7;
+	optional string subtitle = 8;
+	repeated BookAuthor author = 9;
+	optional string readerUrl = 10;
+	optional string downloadEpubUrl = 11;
+	optional string downloadPdfUrl = 12;
+	optional string acsEpubTokenUrl = 13;
+	optional string acsPdfTokenUrl = 14;
+	optional bool epubAvailable = 15;
+	optional bool pdfAvailable = 16;
+	optional string aboutTheAuthor = 17;
+	repeated group Identifier = 18 {
+		optional int32 type = 19;
+		optional string identifier = 20;
+	}
+}
+
+message BookSubject {
+	optional string name = 1;
+	optional string query = 2;
+	optional string subjectId = 3;
+}

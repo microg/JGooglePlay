@@ -1,0 +1,47 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Challenges";
+
+import "BillingAddress.proto";
+
+message AddressChallenge {
+	optional string responseAddressParam = 1;
+	optional string responseCheckboxesParam = 2;
+	optional string title = 3;
+	optional string descriptionHtml = 4;
+	repeated FormCheckbox checkbox = 5;
+	optional Address address = 6;
+	repeated InputValidationError errorInputField = 7;
+	optional string errorHtml = 8;
+	repeated int32 requiredField = 9;
+}
+
+message AuthenticationChallenge {
+	optional int32 authenticationType = 1;
+	optional string responseAuthenticationTypeParam = 2;
+	optional string responseRetryCountParam = 3;
+	optional string pinHeaderText = 4;
+	optional string pinDescriptionTextHtml = 5;
+	optional string gaiaHeaderText = 6;
+	optional string gaiaDescriptionTextHtml = 7;
+}
+
+message Challenge {
+	optional AddressChallenge addressChallenge = 1;
+	optional AuthenticationChallenge authenticationChallenge = 2;
+}
+
+message FormCheckbox {
+	optional string description = 1;
+	optional bool checked = 2;
+	optional bool required = 3;
+}
+
+message PasswordPrompt {
+	optional string prompt = 1;
+	optional string forgotPasswordUrl = 2;
+}
+
+message InputValidationError {
+	optional int32 inputField = 1;
+	optional string errorMessage = 2;
+}

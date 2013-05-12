@@ -1,0 +1,59 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Notifications";
+
+import "App.proto";
+import "DocumentId.proto";
+import "Download.proto";
+import "InApp.proto";
+import "Library.proto";
+import "Purchase.proto";
+import "Unsorted.proto";
+
+message AckNotificationResponse {
+}
+
+message AckNotificationsRequestProto {
+	repeated string notificationId = 1;
+	optional SignatureHashProto signatureHash = 2;
+	repeated string nackNotificationId = 3;
+}
+
+message AckNotificationsResponseProto {
+}
+
+message CheckForNotificationsRequestProto {
+	optional int64 alarmDuration = 1;
+}
+
+message CheckForNotificationsResponseProto {
+}
+
+message Notification {
+	optional int32 notificationType = 1;
+	optional int64 timestamp = 3;
+	optional Docid docid = 4;
+	optional string docTitle = 5;
+	optional string userEmail = 6;
+	optional AndroidAppNotificationData appData = 7;
+	optional AndroidAppDeliveryData appDeliveryData = 8;
+	optional PurchaseRemovalData purchaseRemovalData = 9;
+	optional UserNotificationData userNotificationData = 10;
+	optional InAppNotificationData inAppNotificationData = 11;
+	optional PurchaseDeclinedData purchaseDeclinedData = 12;
+	optional string notificationId = 13;
+	optional LibraryUpdate libraryUpdate = 14;
+	optional LibraryDirtyData libraryDirtyData = 15;
+}
+
+message PendingNotificationsProto {
+	repeated DataMessageProto notification = 1;
+	optional int64 nextCheckMillis = 2;
+}
+
+message UserNotificationData {
+	optional string notificationTitle = 1;
+	optional string notificationText = 2;
+	optional string tickerText = 3;
+	optional string dialogTitle = 4;
+	optional string dialogText = 5;
+}

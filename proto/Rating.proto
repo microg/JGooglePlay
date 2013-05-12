@@ -1,0 +1,20 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Rating";
+
+message AggregateRating {
+	optional int32 type = 1;
+	optional float starRating = 2;
+	optional uint64 ratingsCount = 3;
+	optional uint64 oneStarRatings = 4;
+	optional uint64 twoStarRatings = 5;
+	optional uint64 threeStarRatings = 6;
+	optional uint64 fourStarRatings = 7;
+	optional uint64 fiveStarRatings = 8;
+	optional uint64 thumbsUpCount = 9;
+	optional uint64 thumbsDownCount = 10;
+	optional uint64 commentCount = 11;
+	optional double bayesianMeanRating = 12;
+}
+
+message RateSuggestedContentResponse {
+}

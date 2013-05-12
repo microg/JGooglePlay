@@ -1,0 +1,213 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Unsorted";
+
+import "App.proto";
+import "Asset.proto";
+import "Billing.proto";
+import "BillingAddress.proto";
+import "Carrier.proto";
+import "Documents.proto";
+import "Download.proto";
+import "BadgeImage.proto";
+import "Library.proto";
+import "Purchase.proto";
+import "Reviews.proto";
+
+message InitiateAssociationResponse {
+	optional string userToken = 1;
+}
+
+message VerifyAssociationResponse {
+	optional int32 status = 1;
+	optional Address billingAddress = 2;
+	optional CarrierTos carrierTos = 3;
+}
+
+message FlagContentResponse {
+}
+
+message DeliveryResponse {
+	optional int32 status = 1;
+	optional AndroidAppDeliveryData appDeliveryData = 2;
+}
+
+message DeviceConfig {
+	optional int32 touchScreen = 1;
+	optional int32 keyboardType = 2;
+	optional int32 navigation = 3;
+	optional int32 screenLayout = 4;
+	optional bool hasHardKeyboard = 5;
+	optional bool hasFiveWayNavigation = 6;
+	optional int32 densityDpi = 7;
+	optional int32 glEsVersion = 8;
+	repeated string sharedLibrary = 9;
+	repeated string availableFeature = 10;
+	repeated string nativePlatform = 11;
+	optional int32 widthPixels = 12;
+	optional int32 heightPixels = 13;
+	repeated string locale = 14;
+	repeated string glExtension = 15;
+	optional int32 deviceClass = 16;
+	optional int32 maxApkDownloadSizeMb = 17;
+}
+
+message ResolveLinkResponse {
+	optional string detailsUrl = 1;
+	optional string browseUrl = 2;
+	optional string searchUrl = 3;
+	optional DirectPurchase directPurchase = 4;
+	optional string homeUrl = 5;
+}
+
+message ServerCommands {
+	optional bool clearCache = 1;
+	optional string displayErrorMessage = 2;
+	optional string logErrorStacktrace = 3;
+}
+
+
+message RevokeResponse {
+	optional LibraryUpdate libraryUpdate = 1;
+}
+
+message CorpusMetadata {
+	optional int32 backend = 1;
+	optional string name = 2;
+	optional string landingUrl = 3;
+	optional string libraryName = 4;
+}
+
+message Experiments {
+	repeated string experimentId = 1;
+}
+
+message TocResponse {
+	repeated CorpusMetadata corpus = 1;
+	optional int32 tosVersionDeprecated = 2;
+	optional string tosContent = 3;
+	optional string homeUrl = 4;
+	optional Experiments experiments = 5;
+	optional string tosCheckboxTextMarketingEmails = 6;
+	optional string tosToken = 7;
+	optional UserSettings userSettings = 8;
+	optional string iconOverrideUrl = 9;
+    optional SelfUpdateConfig selfUpdateConfig = 10;
+    optional bool requiresUploadDeviceConfig = 11;
+    optional BillingConfig billingConfig = 12;
+    optional string recsWidgetUrl = 13;
+}
+
+message UserSettings {
+	optional bool tosCheckboxMarketingEmailsOptedIn = 1;
+}
+
+message AcceptTosResponse {
+}
+
+message CheckLicenseRequestProto {
+	optional string packageName = 1;
+	optional int32 versionCode = 2;
+	optional int64 nonce = 3;
+}
+
+message CheckLicenseResponseProto {
+	optional int32 responseCode = 1;
+	optional string signedData = 2;
+	optional string signature = 3;
+}
+
+message ContentSyncRequestProto {
+	optional bool incremental = 1;
+	repeated group AssetInstallState = 2 {
+		optional string assetId = 3;
+		optional int32 assetState = 4;
+		optional int64 installTime = 5;
+		optional int64 uninstallTime = 6;
+		optional string packageName = 7;
+		optional int32 versionCode = 8;
+		optional string assetReferrer = 9;
+	}
+	repeated group SystemApp = 10 {
+		optional string packageName = 11;
+		optional int32 versionCode = 12;
+		repeated string certificateHash = 13;
+	}
+	optional int32 sideloadedAppCount = 14;
+}
+
+message ContentSyncResponseProto {
+	optional int32 numUpdatesAvailable = 1;
+}
+
+message DataMessageProto {
+	optional string category = 1;
+	repeated AppDataProto appData = 3;
+}
+
+message GetAddressSnippetRequestProto {
+	optional EncryptedSubscriberInfo encryptedSubscriberInfo = 1;
+}
+
+message GetAddressSnippetResponseProto {
+	optional string addressSnippet = 1;
+}
+
+message GetMarketMetadataRequestProto {
+	optional int64 lastRequestTime = 1;
+	optional DeviceConfig deviceConfiguration = 2;
+	optional bool deviceRoaming = 3;
+	repeated string marketSignatureHash = 4;
+	optional int32 contentRating = 5;
+	optional string deviceModelName = 6;
+	optional string deviceManufacturerName = 7;
+}
+
+message GetMarketMetadataResponseProto {
+	optional int32 latestClientVersionCode = 1;
+	optional string latestClientUrl = 2;
+	optional bool paidAppsEnabled = 3;
+	repeated BillingParameterProto billingParameter = 4;
+	optional bool commentPostEnabled = 5;
+	optional bool billingEventsEnabled = 6;
+	optional string warningMessage = 7;
+	optional bool inAppBillingEnabled = 8;
+	optional int32 inAppBillingMaxApiVersion = 9;
+}
+
+message ReconstructDatabaseRequestProto {
+	optional bool retrieveFullHistory = 1;
+}
+
+message ReconstructDatabaseResponseProto {
+	repeated AssetIdentifierProto asset = 1;
+}
+
+message RemoveAssetRequestProto {
+	optional string assetId = 1;
+}
+
+
+message RestoreApplicationsRequestProto {
+	optional string backupAndroidId = 1;
+	optional string tosVersion = 2;
+	optional DeviceConfig deviceConfiguration = 3;
+}
+
+message RestoreApplicationsResponseProto {
+	repeated GetAssetResponseProto asset = 1;
+}
+
+message SignedDataProto {
+	optional string signedData = 1;
+	optional string signature = 2;
+}
+
+message StatusBarNotificationProto {
+	optional string tickerText = 1;
+	optional string contentTitle = 2;
+	optional string contentText = 3;
+}
+
+message SelfUpdateConfig {
+    optional int32 latestClientVersionCode = 1;
+}

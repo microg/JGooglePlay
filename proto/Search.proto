@@ -1,0 +1,21 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Search";
+
+import "Documents.proto";
+
+message RelatedSearch {
+	optional string searchUrl = 1;
+	optional string header = 2;
+	optional int32 backendId = 3;
+	optional int32 docType = 4;
+	optional bool current = 5;
+}
+
+message SearchResponse {
+	optional string originalQuery = 1;
+	optional string suggestedQuery = 2;
+	optional bool aggregateQuery = 3;
+	repeated Bucket bucket = 4;
+	repeated DocV2 doc = 5;
+	repeated RelatedSearch relatedSearch = 6;
+}

@@ -1,0 +1,32 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "CreditCard";
+
+message CreditCardInstrument {
+	optional int32 type = 1;
+	optional string escrowHandle = 2;
+	optional string lastDigits = 3;
+	optional int32 expirationMonth = 4;
+	optional int32 expirationYear = 5;
+	repeated EfeParam escrowEfeParam = 6;
+}
+
+message EfeParam {
+	optional int32 key = 1;
+	optional string value = 2;
+}
+
+message ExternalCreditCard {
+	optional string type = 1;
+	optional string lastDigits = 2;
+	optional int32 expYear = 3;
+	optional int32 expMonth = 4;
+	optional string personName = 5;
+	optional string countryCode = 6;
+	optional string postalCode = 7;
+	optional bool makeDefault = 8;
+	optional string address1 = 9;
+	optional string address2 = 10;
+	optional string city = 11;
+	optional string state = 12;
+	optional string phone = 13;
+}

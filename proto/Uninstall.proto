@@ -1,0 +1,10 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Uninstall";
+
+message UninstallReasonRequestProto {
+	optional string assetId = 1;
+	optional int32 reason = 2;
+}
+
+message UninstallReasonResponseProto {
+}

@@ -1,0 +1,28 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Reviews";
+
+
+message GetReviewsResponse {
+	repeated Review review = 1;
+	optional int64 matchingCount = 2;
+}
+
+message Review {
+	optional string authorName = 1;
+	optional string url = 2;
+	optional string source = 3;
+	optional string documentVersion = 4;
+	optional int64 timestampMsec = 5;
+	optional int32 starRating = 6;
+	optional string title = 7;
+	optional string comment = 8;
+	optional string commentId = 9;
+	optional string deviceName = 19;
+	optional string replyText = 29;
+	optional int64 replyTimestampMsec = 30;
+}
+
+message ReviewResponse {
+	optional GetReviewsResponse getResponse = 1;
+	optional string nextPageUrl = 2;
+}

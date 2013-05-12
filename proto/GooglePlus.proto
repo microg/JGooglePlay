@@ -1,0 +1,17 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "GooglePlus";
+
+message PlusOneData {
+	optional bool setByUser = 1;
+	optional int64 total = 2;
+	optional int64 circlesTotal = 3;
+	repeated PlusPerson circlesPeople = 4;
+}
+
+message PlusOneResponse {
+}
+message PlusPerson {
+	optional string displayName = 2;
+	optional string profileImageUrl = 4;
+}
+

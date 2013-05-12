@@ -1,0 +1,55 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Library";
+
+import "DocumentId.proto";
+
+message ClientLibraryState {
+	optional int32 corpus = 1;
+	optional bytes serverToken = 2;
+	optional int64 hashCodeSum = 3;
+	optional int32 librarySize = 4;
+	optional string libraryId = 5;
+}
+
+message LibraryAppDetails {
+	optional string certificateHash = 2;
+	optional int64 refundTimeoutTimestampMsec = 3;
+	optional int64 postDeliveryRefundWindowMsec = 4;
+}
+
+message LibraryDirtyData {
+	optional int32 backend = 1;
+}
+
+message LibraryMutation {
+	optional Docid docid = 1;
+	optional int32 offerType = 2;
+	optional int64 documentHash = 3;
+	optional bool deleted = 4;
+	optional LibraryAppDetails appDetails = 5;
+	optional LibrarySubscriptionDetails subscriptionDetails = 6;
+}
+
+message LibraryReplicationRequest {
+	repeated ClientLibraryState libraryState = 1;
+}
+
+message LibraryReplicationResponse {
+	repeated LibraryUpdate update = 1;
+}
+
+message LibrarySubscriptionDetails {
+	optional int64 initiationTimestampMsec = 1;
+	optional int64 validUntilTimestampMsec = 2;
+	optional bool autoRenewing = 3;
+	optional int64 trialUntilTimestampMsec = 4;
+}
+
+message LibraryUpdate {
+	optional int32 status = 1;
+	optional int32 corpus = 2;
+	optional bytes serverToken = 3;
+	repeated LibraryMutation mutation = 4;
+	optional bool hasMore = 5;
+	optional string libraryId = 6;
+}

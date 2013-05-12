@@ -1,0 +1,46 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Comment";
+
+message CommentsRequestProto {
+	optional string assetId = 1;
+	optional int64 startIndex = 2;
+	optional int64 numEntries = 3;
+	optional bool shouldReturnSelfComment = 4;
+	optional string assetReferrer = 5;
+}
+
+message CommentsResponseProto {
+	repeated ExternalCommentProto comment = 1;
+	optional int64 numTotalEntries = 2;
+	optional ExternalCommentProto selfComment = 3;
+}
+
+message ExternalCommentProto {
+	optional string body = 1;
+	optional int32 rating = 2;
+	optional string creatorName = 3;
+	optional int64 creationTime = 4;
+	optional string creatorId = 5;
+}
+
+message ModifyCommentRequestProto {
+	optional string assetId = 1;
+	optional ExternalCommentProto comment = 2;
+	optional bool deleteComment = 3;
+	optional bool flagAsset = 4;
+	optional int32 flagType = 5;
+	optional string flagMessage = 6;
+	optional bool nonFlagFlow = 7;
+}
+
+message ModifyCommentResponseProto {
+}
+
+message RateCommentRequestProto {
+	optional string assetId = 1;
+	optional string creatorId = 2;
+	optional int32 commentRating = 3;
+}
+
+message RateCommentResponseProto {
+}

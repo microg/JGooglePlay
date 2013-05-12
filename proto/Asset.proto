@@ -1,0 +1,106 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Asset";
+
+import "BadgeImage.proto";
+
+message AssetIdentifierProto {
+	optional string packageName = 1;
+	optional int32 versionCode = 2;
+	optional string assetId = 3;
+}
+
+message AssetsRequestProto {
+	optional int32 assetType = 1;
+	optional string query = 2;
+	optional string categoryId = 3;
+	repeated string assetId = 4;
+	optional bool retrieveVendingHistory = 5;
+	optional bool retrieveExtendedInfo = 6;
+	optional int32 sortOrder = 7;
+	optional int64 startIndex = 8;
+	optional int64 numEntries = 9;
+	optional int32 viewFilter = 10;
+	optional string rankingType = 11;
+	optional bool retrieveCarrierChannel = 12;
+	repeated string pendingDownloadAssetId = 13;
+	optional bool reconstructVendingHistory = 14;
+	optional bool unfilteredResults = 15;
+	repeated string badgeId = 16;
+}
+
+
+message AssetsResponseProto {
+	repeated ExternalAssetProto asset = 1;
+	optional int64 numTotalEntries = 2;
+	optional string correctedQuery = 3;
+	repeated ExternalAssetProto altAsset = 4;
+	optional int64 numCorrectedEntries = 5;
+	optional string header = 6;
+	optional int32 listType = 7;
+}
+
+message DownloadInfoProto {
+	optional int64 apkSize = 1;
+	repeated FileMetadataProto additionalFile = 2;
+}
+
+message ExternalAssetProto {
+	optional string id = 1;
+	optional string title = 2;
+	optional int32 assetType = 3;
+	optional string owner = 4;
+	optional string version = 5;
+	optional string price = 6;
+	optional string averageRating = 7;
+	optional int64 numRatings = 8;
+	optional group PurchaseInformation = 9 {
+		optional int64 purchaseTime = 10;
+		optional int64 refundTimeoutTime = 11;
+		optional int32 refundStartPolicy = 45;
+		optional int64 refundWindowDuration = 46;
+	}
+	optional group ExtendedInfo = 12 {
+		optional string description = 13;
+		optional int64 downloadCount = 14;
+		repeated string applicationPermissionId = 15;
+		optional int64 requiredInstallationSize = 16;
+		optional string packageName = 17;
+		optional string category = 18;
+		optional bool forwardLocked = 19;
+		optional string contactEmail = 20;
+		optional bool everInstalledByUser = 21;
+		optional string downloadCountString = 23;
+		optional string contactPhone = 26;
+		optional string contactWebsite = 27;
+		optional bool nextPurchaseRefundable = 28;
+		optional int32 numScreenshots = 30;
+		optional string promotionalDescription = 31;
+		optional int32 serverAssetState = 34;
+		optional int32 contentRatingLevel = 36;
+		optional string contentRatingString = 37;
+		optional string recentChanges = 38;
+		repeated group PackageDependency = 39 {
+			optional string packageName = 41;
+			optional bool skipPermissions = 42;
+		}
+		optional string videoLink = 43;
+		optional DownloadInfoProto downloadInfo = 49;
+	}
+	optional string ownerId = 22;
+	optional string packageName = 24;
+	optional int32 versionCode = 25;
+	optional bool bundledAsset = 29;
+	optional string priceCurrency = 32;
+	optional int64 priceMicros = 33;
+	optional string filterReason = 35;
+	optional string actualSellerPrice = 40;
+	repeated ExternalBadgeProto appBadge = 47;
+	repeated ExternalBadgeProto ownerBadge = 48;
+}
+
+message FileMetadataProto {
+	optional int32 fileType = 1;
+	optional int32 versionCode = 2;
+	optional int64 size = 3;
+	optional string downloadUrl = 4;
+}

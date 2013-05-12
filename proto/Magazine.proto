@@ -1,0 +1,10 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Magazine";
+
+
+message MagazineDetails {
+	optional string parentDetailsUrl = 1;
+	optional string deviceAvailabilityDescriptionHtml = 2;
+	optional string psvDescription = 3;
+	optional string deliveryFrequencyDescription = 4;
+}

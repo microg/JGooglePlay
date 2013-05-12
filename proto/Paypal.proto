@@ -1,0 +1,71 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Paypal";
+
+import "BillingAddress.proto";
+
+message ExternalPaypalInstrumentProto {
+	optional string instrumentKey = 1;
+	optional string preapprovalKey = 2;
+	optional string paypalEmail = 3;
+	optional AddressProto paypalAddress = 4;
+	optional bool multiplePaypalInstrumentsSupported = 5;
+}
+
+message PaypalCountryInfoProto {
+	optional bool birthDateRequired = 1;
+	optional string tosText = 2;
+	optional string billingAgreementText = 3;
+	optional string preTosText = 4;
+}
+
+message PaypalCreateAccountRequestProto {
+	optional string firstName = 1;
+	optional string lastName = 2;
+	optional AddressProto address = 3;
+	optional string birthDate = 4;
+}
+
+message PaypalCreateAccountResponseProto {
+	optional string createAccountKey = 1;
+}
+
+message PaypalCredentialsProto {
+	optional string preapprovalKey = 1;
+	optional string paypalEmail = 2;
+}
+
+message PaypalMassageAddressRequestProto {
+	optional AddressProto address = 1;
+}
+
+message PaypalMassageAddressResponseProto {
+	optional AddressProto address = 1;
+}
+
+message PaypalPreapprovalCredentialsRequestProto {
+	optional string gaiaAuthToken = 1;
+	optional string billingInstrumentId = 2;
+}
+
+message PaypalPreapprovalCredentialsResponseProto {
+	optional int32 resultCode = 1;
+	optional string paypalAccountKey = 2;
+	optional string paypalEmail = 3;
+}
+
+message PaypalPreapprovalDetailsRequestProto {
+	optional bool getAddress = 1;
+	optional string preapprovalKey = 2;
+}
+
+message PaypalPreapprovalDetailsResponseProto {
+	optional string paypalEmail = 1;
+	optional AddressProto address = 2;
+}
+
+message PaypalPreapprovalRequestProto {
+}
+
+message PaypalPreapprovalResponseProto {
+	optional string preapprovalKey = 1;
+}

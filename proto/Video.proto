@@ -1,0 +1,37 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Video";
+message Trailer {
+	optional string trailerId = 1;
+	optional string title = 2;
+	optional string thumbnailUrl = 3;
+	optional string watchUrl = 4;
+	optional string duration = 5;
+}
+
+message VideoCredit {
+	optional int32 creditType = 1;
+	optional string credit = 2;
+	repeated string name = 3;
+}
+
+message VideoDetails {
+	repeated VideoCredit credit = 1;
+	optional string duration = 2;
+	optional string releaseDate = 3;
+	optional string contentRating = 4;
+	optional int64 likes = 5;
+	optional int64 dislikes = 6;
+	repeated string genre = 7;
+	repeated Trailer trailer = 8;
+	repeated VideoRentalTerm rentalTerm = 9;
+}
+
+message VideoRentalTerm {
+	optional int32 offerType = 1;
+	optional string offerAbbreviation = 2;
+	optional string rentalHeader = 3;
+	repeated group Term = 4 {
+		optional string header = 5;
+		optional string body = 6;
+	}
+}

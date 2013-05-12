@@ -1,0 +1,90 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Offers";
+
+message Availability {
+	optional int32 restriction = 5;
+	optional int32 offerType = 6;
+	optional Rule rule = 7;
+	repeated group PerDeviceAvailabilityRestriction = 9 {
+		optional fixed64 androidId = 10;
+		optional int32 deviceRestriction = 11;
+		optional int64 channelId = 12;
+		optional FilterEvaluationInfo filterInfo = 15;
+	}
+	optional bool availableIfOwned = 13;
+	repeated Install install = 14;
+	optional FilterEvaluationInfo filterInfo = 16;
+	optional OwnershipInfo ownershipInfo = 17;
+}
+
+message FilterEvaluationInfo {
+	repeated RuleEvaluation ruleEvaluation = 1;
+}
+
+message Install {
+	optional fixed64 androidId = 1;
+	optional int32 version = 2;
+	optional bool bundled = 3;
+}
+
+message RentalTerms {
+	optional int32 grantPeriodSeconds = 1;
+	optional int32 activatePeriodSeconds = 2;
+}
+
+message Rule {
+	optional bool negate = 1;
+	optional int32 operator = 2;
+	optional int32 key = 3;
+	repeated string stringArg = 4;
+	repeated int64 longArg = 5;
+	repeated double doubleArg = 6;
+	repeated Rule subrule = 7;
+	optional int32 responseCode = 8;
+	optional string comment = 9;
+	repeated fixed64 stringArgHash = 10;
+	repeated int32 constArg = 11;
+}
+
+message RuleEvaluation {
+	optional Rule rule = 1;
+	repeated string actualStringValue = 2;
+	repeated int64 actualLongValue = 3;
+	repeated bool actualBoolValue = 4;
+	repeated double actualDoubleValue = 5;
+}
+
+message SubscriptionTerms {
+	optional TimePeriod recurringPeriod = 1;
+	optional TimePeriod trialPeriod = 2;
+}
+
+message TimePeriod {
+	optional int32 unit = 1;
+	optional int32 count = 2;
+}
+
+message Offer {
+	optional int64 micros = 1;
+	optional string currencyCode = 2;
+	optional string formattedAmount = 3;
+	repeated Offer convertedPrice = 4;
+	optional bool checkoutFlowRequired = 5;
+	optional int64 fullPriceMicros = 6;
+	optional string formattedFullAmount = 7;
+	optional int32 offerType = 8;
+	optional RentalTerms rentalTerms = 9;
+	optional int64 onSaleDate = 10;
+	repeated string promotionLabel = 11;
+	optional SubscriptionTerms subscriptionTerms = 12;
+	optional string formattedName = 13;
+	optional string formattedDescription = 14;
+}
+
+message OwnershipInfo {
+	optional int64 initiationTimestampMsec = 1;
+	optional int64 validUntilTimestampMsec = 2;
+	optional bool autoRenewing = 3;
+	optional int64 refundTimeoutTimestampMsec = 4;
+	optional int64 postDeliveryRefundWindowMsec = 5;
+}

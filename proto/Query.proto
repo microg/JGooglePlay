@@ -1,0 +1,24 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Query";
+
+import "App.proto";
+
+message QuerySuggestionProto {
+	optional string query = 1;
+	optional int32 estimatedNumResults = 2;
+	optional int32 queryWeight = 3;
+}
+
+message QuerySuggestionRequestProto {
+	optional string query = 1;
+	optional int32 requestType = 2;
+}
+
+message QuerySuggestionResponseProto {
+	repeated group Suggestion = 1 {
+		optional AppSuggestionProto appSuggestion = 2;
+		optional QuerySuggestionProto querySuggestion = 3;
+	}
+	optional int32 estimatedNumAppSuggestions = 4;
+	optional int32 estimatedNumQuerySuggestions = 5;
+}

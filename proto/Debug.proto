@@ -1,0 +1,10 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Debug";
+
+message DebugInfo {
+	repeated string message = 1;
+	repeated group Timing = 2 {
+		optional string name = 3;
+		optional double timeInMs = 4;
+	}
+}

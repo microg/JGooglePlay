@@ -1,0 +1,40 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Music";
+
+message AlbumDetails {
+	optional string name = 1;
+	optional MusicDetails details = 2;
+	optional ArtistDetails displayArtist = 3;
+}
+
+message ArtistDetails {
+	optional string detailsUrl = 1;
+	optional string name = 2;
+	optional ArtistExternalLinks externalLinks = 3;
+}
+
+message ArtistExternalLinks {
+	repeated string websiteUrl = 1;
+	optional string googlePlusProfileUrl = 2;
+	optional string youtubeChannelUrl = 3;
+}
+
+message MusicDetails {
+	optional int32 censoring = 1;
+	optional int32 durationSec = 2;
+	optional string originalReleaseDate = 3;
+	optional string label = 4;
+	repeated ArtistDetails artist = 5;
+	repeated string genre = 6;
+	optional string releaseDate = 7;
+	repeated int32 releaseType = 8;
+}
+
+message SongDetails {
+	optional string name = 1;
+	optional MusicDetails details = 2;
+	optional string albumName = 3;
+	optional int32 trackNumber = 4;
+	optional string previewUrl = 5;
+	optional ArtistDetails displayArtist = 6;
+}

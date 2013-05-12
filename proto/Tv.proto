@@ -1,0 +1,22 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Tv";
+
+message TvEpisodeDetails {
+	optional string parentDetailsUrl = 1;
+	optional int32 episodeIndex = 2;
+	optional string releaseDate = 3;
+}
+
+message TvSeasonDetails {
+	optional string parentDetailsUrl = 1;
+	optional int32 seasonIndex = 2;
+	optional string releaseDate = 3;
+	optional string broadcaster = 4;
+}
+
+message TvShowDetails {
+	optional int32 seasonCount = 1;
+	optional int32 startYear = 2;
+	optional int32 endYear = 3;
+	optional string broadcaster = 4;
+}

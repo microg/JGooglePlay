@@ -1,0 +1,243 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Purchase";
+
+import "Asset.proto";
+import "Billing.proto";
+import "BillingAddress.proto";
+import "Carrier.proto";
+import "CreditCard.proto";
+import "Challenges.proto";
+import "Debug.proto";
+import "Download.proto";
+import "Instruments.proto";
+import "Library.proto";
+import "Paypal.proto";
+import "Offers.proto";
+
+message BuyResponse {
+	optional PurchaseNotificationResponse purchaseResponse = 1;
+	optional group CheckoutInfo = 2 {
+		optional LineItem item = 3;
+		repeated LineItem subItem = 4;
+		repeated group CheckoutOption = 5 {
+			optional string formOfPayment = 6;
+			optional string encodedAdjustedCart = 7;
+			optional string instrumentId = 15;
+			repeated LineItem item = 16;
+			repeated LineItem subItem = 17;
+			optional LineItem total = 18;
+			repeated string footerHtml = 19;
+			optional int32 instrumentFamily = 29;
+			repeated int32 deprecatedInstrumentInapplicableReason = 30;
+			optional bool selectedInstrument = 32;
+			optional LineItem summary = 33;
+			repeated string footnoteHtml = 35;
+			optional Instrument instrument = 43;
+			optional string purchaseCookie = 45;
+			repeated string disabledReason = 48;
+		}
+		optional string deprecatedCheckoutUrl = 10;
+		optional string addInstrumentUrl = 11;
+		repeated string footerHtml = 20;
+		repeated int32 eligibleInstrumentFamily = 31;
+		repeated string footnoteHtml = 36;
+		repeated Instrument eligibleInstrument = 44;
+	}
+	optional string continueViaUrl = 8;
+	optional string purchaseStatusUrl = 9;
+	optional string checkoutServiceId = 12;
+	optional bool checkoutTokenRequired = 13;
+	optional string baseCheckoutUrl = 14;
+	repeated string tosCheckboxHtml = 37;
+	optional int32 iabPermissionError = 38;
+	optional PurchaseStatusResponse purchaseStatusResponse = 39;
+	optional string purchaseCookie = 46;
+	optional Challenge challenge = 49;
+}
+
+message DirectPurchase {
+	optional string detailsUrl = 1;
+	optional string purchaseDocid = 2;
+	optional string parentDocid = 3;
+	optional int32 offerType = 4;
+}
+
+message LineItem {
+	optional string name = 1;
+	optional string description = 2;
+	optional Offer offer = 3;
+	optional Money amount = 4;
+}
+
+message Money {
+	optional int64 micros = 1;
+	optional string currencyCode = 2;
+	optional string formattedAmount = 3;
+}
+
+message PurchaseCartInfoProto {
+	optional string itemPrice = 1;
+	optional string taxInclusive = 2;
+	optional string taxExclusive = 3;
+	optional string total = 4;
+	optional string taxMessage = 5;
+	optional string footerMessage = 6;
+	optional string priceCurrency = 7;
+	optional int64 priceMicros = 8;
+}
+
+message PurchaseDeclinedData {
+	optional int32 reason = 1;
+	optional bool showNotification = 2;
+}
+
+message PurchaseRemovalData {
+	optional bool malicious = 1;
+}
+
+message PurchaseOrderRequestProto {
+	optional string gaiaAuthToken = 1;
+	optional string assetId = 2;
+	optional string transactionId = 3;
+	optional string billingInstrumentId = 4;
+	optional bool tosAccepted = 5;
+	optional CarrierBillingCredentialsProto carrierBillingCredentials = 6;
+	optional string existingOrderId = 7;
+	optional int32 billingInstrumentType = 8;
+	optional string billingParametersId = 9;
+	optional PaypalCredentialsProto paypalCredentials = 10;
+	optional RiskHeaderInfoProto riskHeaderInfo = 11;
+	optional int32 productType = 12;
+	optional SignatureHashProto signatureHash = 13;
+	optional string developerPayload = 14;
+}
+
+
+message PurchasePostRequestProto {
+	optional string gaiaAuthToken = 1;
+	optional string assetId = 2;
+	optional string transactionId = 3;
+	optional group BillingInstrumentInfo = 4 {
+		optional string billingInstrumentId = 5;
+		optional ExternalCreditCard creditCard = 6;
+		optional ExternalCarrierBillingInstrumentProto carrierInstrument = 9;
+		optional ExternalPaypalInstrumentProto paypalInstrument = 10;
+	}
+	optional bool tosAccepted = 7;
+	optional string cbInstrumentKey = 8;
+	optional bool paypalAuthConfirmed = 11;
+	optional int32 productType = 12;
+	optional SignatureHashProto signatureHash = 13;
+}
+
+message PurchaseInfoProto {
+	optional string transactionId = 1;
+	optional PurchaseCartInfoProto cartInfo = 2;
+	optional group BillingInstruments = 3 {
+		repeated group BillingInstrument = 4 {
+			optional string id = 5;
+			optional string name = 6;
+			optional bool isInvalid = 7;
+			optional int32 instrumentType = 11;
+			optional int32 instrumentStatus = 14;
+		}
+		optional string defaultBillingInstrumentId = 8;
+	}
+	repeated int32 errorInputFields = 9;
+	optional string refundPolicy = 10;
+	optional bool userCanAddGdd = 12;
+	repeated int32 eligibleInstrumentTypes = 13;
+	optional string orderId = 15;
+}
+
+message PurchasePostResponseProto {
+	optional int32 deprecatedResultCode = 1;
+	optional PurchaseInfoProto purchaseInfo = 2;
+	optional string termsOfServiceUrl = 3;
+	optional string termsOfServiceText = 4;
+	optional string termsOfServiceName = 5;
+	optional string termsOfServiceCheckboxText = 6;
+	optional string termsOfServiceHeaderText = 7;
+	optional PurchaseResultProto purchaseResult = 8;
+}
+
+message PurchaseProductRequestProto {
+	optional int32 productType = 1;
+	optional string productId = 2;
+	optional SignatureHashProto signatureHash = 3;
+}
+
+message PurchaseProductResponseProto {
+	optional string title = 1;
+	optional string itemTitle = 2;
+	optional string itemDescription = 3;
+	optional string merchantField = 4;
+}
+
+message PurchaseResultProto {
+	optional int32 resultCode = 1;
+	optional string resultCodeMessage = 2;
+}
+message PurchaseOrderResponseProto {
+	optional int32 deprecatedResultCode = 1;
+	optional PurchaseInfoProto purchaseInfo = 2;
+	optional ExternalAssetProto asset = 3;
+	optional PurchaseResultProto purchaseResult = 4;
+}
+
+message PurchaseNotificationResponse {
+	optional int32 status = 1;
+	optional DebugInfo debugInfo = 2;
+	optional string localizedErrorMessage = 3;
+	optional string purchaseId = 4;
+}
+
+message PurchaseStatusResponse {
+	optional int32 status = 1;
+	optional string statusMsg = 2;
+	optional string statusTitle = 3;
+	optional string briefMessage = 4;
+	optional string infoUrl = 5;
+	optional LibraryUpdate libraryUpdate = 6;
+	optional Instrument rejectedInstrument = 7;
+	optional AndroidAppDeliveryData appDeliveryData = 8;
+}
+
+message PurchaseMetadataRequestProto {
+	optional bool deprecatedRetrieveBillingCountries = 1;
+	optional int32 billingInstrumentType = 2;
+}
+
+message PurchaseMetadataResponseProto {
+	optional group Countries = 1 {
+		repeated group Country = 2 {
+			optional string countryCode = 3;
+			optional string countryName = 4;
+			optional PaypalCountryInfoProto paypalCountryInfo = 5;
+			optional bool allowsReducedBillingAddress = 6;
+			repeated group InstrumentAddressSpec = 7 {
+				optional int32 instrumentFamily = 8;
+				optional BillingAddressSpec billingAddressSpec = 9;
+			}
+		}
+	}
+}
+
+message RefundRequestProto {
+	optional string assetId = 1;
+}
+
+message RefundResponseProto {
+	optional int32 result = 1;
+	optional ExternalAssetProto asset = 2;
+	optional string resultDetail = 3;
+}
+message RiskHeaderInfoProto {
+	optional string hashedDeviceInfo = 1;
+}
+
+message SignatureHashProto {
+	optional string packageName = 1;
+	optional int32 versionCode = 2;
+	optional bytes hash = 3;
+}

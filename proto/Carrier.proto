@@ -1,0 +1,83 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Carrier";
+
+import "Challenges.proto";
+
+message CarrierBillingCredentials {
+	optional string value = 1;
+	optional int64 expiration = 2;
+}
+
+message CarrierBillingCredentialsProto {
+	optional string credentials = 1;
+	optional int64 credentialsTimeout = 2;
+}
+
+message CarrierBillingInstrument {
+	optional string instrumentKey = 1;
+	optional string accountType = 2;
+	optional string currencyCode = 3;
+	optional int64 transactionLimit = 4;
+	optional string subscriberIdentifier = 5;
+	optional EncryptedSubscriberInfo encryptedSubscriberInfo = 6;
+	optional CarrierBillingCredentials credentials = 7;
+	optional CarrierTos acceptedCarrierTos = 8;
+}
+
+message CarrierBillingInstrumentStatus {
+	optional CarrierTos carrierTos = 1;
+	optional bool associationRequired = 2;
+	optional bool passwordRequired = 3;
+	optional PasswordPrompt carrierPasswordPrompt = 4;
+	optional int32 apiVersion = 5;
+	optional string name = 6;
+}
+
+message CarrierTos {
+	optional CarrierTosEntry dcbTos = 1;
+	optional CarrierTosEntry piiTos = 2;
+	optional bool needsDcbTosAcceptance = 3;
+	optional bool needsPiiTosAcceptance = 4;
+}
+
+message CarrierTosEntry {
+	optional string url = 1;
+	optional string version = 2;
+}
+
+message ExternalCarrierBillingInstrumentProto {
+	optional string instrumentKey = 1;
+	optional string subscriberIdentifier = 2;
+	optional string accountType = 3;
+	optional string subscriberCurrency = 4;
+	optional uint64 transactionLimit = 5;
+	optional string subscriberName = 6;
+	optional string address1 = 7;
+	optional string address2 = 8;
+	optional string city = 9;
+	optional string state = 10;
+	optional string postalCode = 11;
+	optional string country = 12;
+	optional EncryptedSubscriberInfo encryptedSubscriberInfo = 13;
+}
+
+message EncryptedSubscriberInfo {
+	optional string data = 1;
+	optional string encryptedKey = 2;
+	optional string signature = 3;
+	optional string initVector = 4;
+	optional int32 googleKeyVersion = 5;
+	optional int32 carrierKeyVersion = 6;
+}
+
+message GetCarrierInfoRequestProto {
+}
+
+message GetCarrierInfoResponseProto {
+	optional bool carrierChannelEnabled = 1;
+	optional bytes carrierLogoIcon = 2;
+	optional bytes carrierBanner = 3;
+	optional string carrierSubtitle = 4;
+	optional string carrierTitle = 5;
+	optional int32 carrierImageDensity = 6;
+}

@@ -1,0 +1,40 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Browse";
+
+import "BadgeImage.proto";
+import "Purchase.proto";
+
+message BrowseLink {
+    optional string name = 1;
+    optional string dataUrl = 3;
+    optional bytes serverLogsCookie = 4;
+}
+
+message BrowseResponse {
+    optional string contentsUrl = 1;
+    optional string promoUrl = 2;
+    repeated BrowseLink category = 3;
+    repeated BrowseLink breadcrumb = 4;
+    repeated QuickLink quickLink = 5;
+}
+
+message QuickLink {
+    optional string name = 1;
+    optional Image image = 2;
+    optional ResolvedLink link = 3;
+    optional bool displayRequired = 4;
+    optional bytes serverLogsCookie = 5;
+}
+
+message ResolvedLink {
+    optional string detailsUrl = 1;
+    optional string browseUrl = 2;
+    optional string searchUrl = 3;
+    optional DirectPurchase directPurchase = 4;
+    optional string homeUrl = 5;
+    optional RedeemGiftCard redeemGiftCard = 6;
+}
+
+message RedeemGiftCard {
+    // Huh, i'm empty
+}

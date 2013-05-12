@@ -1,0 +1,37 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "BillingAddress";
+
+message Address {
+	optional string name = 1;
+	optional string addressLine1 = 2;
+	optional string addressLine2 = 3;
+	optional string city = 4;
+	optional string state = 5;
+	optional string postalCode = 6;
+	optional string postalCountry = 7;
+	optional string dependentLocality = 8;
+	optional string sortingCode = 9;
+	optional string languageCode = 10;
+	optional string phoneNumber = 11;
+	optional bool isReduced = 12;
+	optional string firstName = 13;
+	optional string lastName = 14;
+	optional string email = 15;
+}
+
+message AddressProto {
+	optional string address1 = 1;
+	optional string address2 = 2;
+	optional string city = 3;
+	optional string state = 4;
+	optional string postalCode = 5;
+	optional string country = 6;
+	optional string name = 7;
+	optional string type = 8;
+	optional string phone = 9;
+}
+
+message BillingAddressSpec {
+	optional int32 billingAddressType = 1;
+	repeated int32 requiredField = 2;
+}

@@ -1,0 +1,39 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "App";
+
+import "Asset.proto";
+import "Download.proto";
+
+message AndroidAppNotificationData {
+	optional int32 versionCode = 1;
+	optional string assetId = 2;
+}
+
+message AppDataProto {
+	optional string key = 1;
+	optional string value = 2;
+}
+
+message AppDetails {
+	optional string developerName = 1;
+	optional int32 majorVersionNumber = 2;
+	optional int32 versionCode = 3;
+	optional string versionString = 4;
+	optional string title = 5;
+	repeated string appCategory = 7;
+	optional int32 contentRating = 8;
+	optional int64 installationSize = 9;
+	repeated string permission = 10;
+	optional string developerEmail = 11;
+	optional string developerWebsite = 12;
+	optional string numDownloads = 13;
+	optional string packageName = 14;
+	optional string recentChangesHtml = 15;
+	optional string uploadDate = 16;
+	repeated FileMetadata file = 17;
+	optional string appType = 18;
+}
+
+message AppSuggestionProto {
+	optional ExternalAssetProto assetInfo = 1;
+}

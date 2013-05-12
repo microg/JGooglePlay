@@ -1,0 +1,262 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "Documents";
+
+import "App.proto";
+import "Book.proto";
+import "DocumentId.proto";
+import "GooglePlus.proto";
+import "BadgeImage.proto";
+import "Magazine.proto";
+import "Music.proto";
+import "Rating.proto";
+import "Reviews.proto";
+import "Offers.proto";
+import "Tv.proto";
+import "Video.proto";
+
+message Annotations {
+	optional SectionMetadata sectionRelated = 1;
+	optional SectionMetadata sectionMoreBy = 2;
+	optional PlusOneData plusOneData = 3;
+	repeated Warning warning = 4;
+	optional SectionMetadata sectionBodyOfWork = 5;
+	optional SectionMetadata sectionCoreContent = 6;
+	optional Template template = 7;
+	repeated Badge badgeForCreator = 8;
+	repeated Badge badgeForDoc = 9;
+	optional Link link = 10;
+	optional SectionMetadata sectionCrossSell = 11;
+	optional SectionMetadata sectionRelatedDocType = 12;
+	repeated PromotedDoc promotedDoc = 13;
+	optional string offerNote = 14;
+	repeated DocV2 subscription = 16;
+	optional Reason reason = 17;
+	optional string privacyPolicyUrl = 18;
+}
+
+
+message BulkDetailsEntry {
+	optional DocV2 doc = 1;
+}
+
+message BulkDetailsRequest {
+	repeated string docid = 1;
+	optional bool includeChildDocs = 2;
+}
+
+message BulkDetailsResponse {
+	repeated BulkDetailsEntry entry = 1;
+}
+
+message DetailsResponse {
+	optional DocV1 docV1 = 1;
+	optional string analyticsCookie = 2;
+	optional Review userReview = 3;
+	optional DocV2 docV2 = 4;
+	optional string footerHtml = 5;
+}
+
+message Bucket {
+	repeated DocV1 document = 1;
+	optional bool multiCorpus = 2;
+	optional string title = 3;
+	optional string iconUrl = 4;
+	optional string fullContentsUrl = 5;
+	optional double relevance = 6;
+	optional int64 estimatedResults = 7;
+	optional string analyticsCookie = 8;
+	optional string fullContentsListUrl = 9;
+	optional string nextPageUrl = 10;
+	optional bool ordered = 11;
+}
+message ContainerMetadata {
+	optional string browseUrl = 1;
+	optional string nextPageUrl = 2;
+	optional double relevance = 3;
+	optional int64 estimatedResults = 4;
+	optional string analyticsCookie = 5;
+	optional bool ordered = 6;
+}
+
+message DealOfTheDay {
+	optional string featuredHeader = 1;
+	optional string colorThemeArgb = 2;
+}
+
+message Document {
+	optional Docid docid = 1;
+	optional Docid fetchDocid = 2;
+	optional Docid sampleDocid = 3;
+	optional string title = 4;
+	optional string url = 5;
+	repeated string snippet = 6;
+	optional Offer priceDeprecated = 7;
+	optional Availability availability = 9;
+	repeated Image image = 10;
+	repeated Document child = 11;
+	optional AggregateRating aggregateRating = 13;
+	repeated Offer offer = 14;
+	repeated TranslatedText translatedSnippet = 15;
+	repeated DocumentVariant documentVariant = 16;
+	repeated string categoryId = 17;
+	repeated Document decoration = 18;
+	repeated Document parent = 19;
+	optional string privacyPolicyUrl = 20;
+}
+
+message DocumentDetails {
+	optional AppDetails appDetails = 1;
+	optional AlbumDetails albumDetails = 2;
+	optional ArtistDetails artistDetails = 3;
+	optional SongDetails songDetails = 4;
+	optional BookDetails bookDetails = 5;
+	optional VideoDetails videoDetails = 6;
+	optional SubscriptionDetails subscriptionDetails = 7;
+	optional MagazineDetails magazineDetails = 8;
+	optional TvShowDetails tvShowDetails = 9;
+	optional TvSeasonDetails tvSeasonDetails = 10;
+	optional TvEpisodeDetails tvEpisodeDetails = 11;
+}
+
+message DocumentVariant {
+	optional int32 variationType = 1;
+	optional Rule rule = 2;
+	optional string title = 3;
+	repeated string snippet = 4;
+	optional string recentChanges = 5;
+	repeated TranslatedText autoTranslation = 6;
+	repeated Offer offer = 7;
+	optional int64 channelId = 9;
+	repeated Document child = 10;
+	repeated Document decoration = 11;
+}
+
+message DocV1 {
+	optional Document finskyDoc = 1;
+	optional string docid = 2;
+	optional string detailsUrl = 3;
+	optional string reviewsUrl = 4;
+	optional string relatedListUrl = 5;
+	optional string moreByListUrl = 6;
+	optional string shareUrl = 7;
+	optional string creator = 8;
+	optional DocumentDetails details = 9;
+	optional string descriptionHtml = 10;
+	optional string relatedBrowseUrl = 11;
+	optional string moreByBrowseUrl = 12;
+	optional string relatedHeader = 13;
+	optional string moreByHeader = 14;
+	optional string title = 15;
+	optional PlusOneData plusOneData = 16;
+	optional string warningMessage = 17;
+}
+
+message DocV2 {
+	optional string docid = 1;
+	optional string backendDocid = 2;
+	optional int32 docType = 3;
+	optional int32 backendId = 4;
+	optional string title = 5;
+	optional string creator = 6;
+	optional string descriptionHtml = 7;
+	repeated Offer offer = 8;
+	optional Availability availability = 9;
+	repeated Image image = 10;
+	repeated DocV2 child = 11;
+	optional ContainerMetadata containerMetadata = 12;
+	optional DocumentDetails details = 13;
+	optional AggregateRating aggregateRating = 14;
+	optional Annotations annotations = 15;
+	optional string detailsUrl = 16;
+	optional string shareUrl = 17;
+	optional string reviewsUrl = 18;
+	optional string backendUrl = 19;
+	optional string purchaseDetailsUrl = 20;
+	optional bool detailsReusable = 21;
+	optional string subtitle = 22;
+}
+
+message Link {
+	optional string uri = 1;
+}
+
+message ListResponse {
+	repeated Bucket bucket = 1;
+	repeated DocV2 doc = 2;
+}
+
+message PromotedDoc {
+	optional string title = 1;
+	optional string subtitle = 2;
+	repeated Image image = 3;
+	optional string descriptionHtml = 4;
+	optional string detailsUrl = 5;
+}
+
+message Reason {
+	optional string briefReason = 1;
+	optional string detailedReason = 2;
+	optional string uniqueId = 3;
+}
+
+message TranslatedText {
+	optional string text = 1;
+	optional string sourceLocale = 2;
+	optional string targetLocale = 3;
+}
+
+message SeriesAntenna {
+	optional string seriesTitle = 1;
+	optional string seriesSubtitle = 2;
+	optional string episodeTitle = 3;
+	optional string episodeSubtitle = 4;
+	optional string colorThemeArgb = 5;
+	optional SectionMetadata sectionTracks = 6;
+	optional SectionMetadata sectionAlbums = 7;
+}
+
+message SectionMetadata {
+	optional string header = 1;
+	optional string listUrl = 2;
+	optional string browseUrl = 3;
+	optional string descriptionHtml = 4;
+}
+
+message SubscriptionDetails {
+	optional int32 subscriptionPeriod = 1;
+}
+
+message ContainerWithBanner {
+	optional string colorThemeArgb = 1;
+}
+
+message EditorialSeriesContainer {
+	optional string seriesTitle = 1;
+	optional string seriesSubtitle = 2;
+	optional string episodeTitle = 3;
+	optional string episodeSubtitle = 4;
+	optional string colorThemeArgb = 5;
+}
+
+message Template {
+	optional SeriesAntenna seriesAntenna = 1;
+	optional TileTemplate tileGraphic2X1 = 2;
+	optional TileTemplate tileGraphic4X2 = 3;
+	optional TileTemplate tileGraphicColoredTitle2X1 = 4;
+	optional TileTemplate tileGraphicUpperLeftTitle2X1 = 5;
+	optional TileTemplate tileDetailsReflectedGraphic2X2 = 6;
+	optional TileTemplate tileFourBlock4X2 = 7;
+	optional ContainerWithBanner containerWithBanner = 8;
+	optional DealOfTheDay dealOfTheDay = 9;
+	optional TileTemplate tileGraphicColoredTitle4X2 = 10;
+	optional EditorialSeriesContainer editorialSeriesContainer = 11;
+}
+
+message TileTemplate {
+	optional string colorThemeArgb = 1;
+	optional string colorTextArgb = 2;
+}
+
+message Warning {
+	optional string localizedMessage = 1;
+}
