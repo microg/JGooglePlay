@@ -148,7 +148,9 @@ public class DfeClient extends Client {
 		beforeRequest(connection);
 		byte[] bytes = readData(connection, false);
 		try {
-			return Requests.ResponseWrapper.parseFrom(bytes).getPayload();
+			Requests.ResponseWrapper responseWrapper = Requests.ResponseWrapper.parseFrom(bytes);
+
+			return responseWrapper.getPayload();
 		} catch (InvalidProtocolBufferMicroException e) {
 			throw new RuntimeException(e);
 		}
