@@ -2,6 +2,7 @@ package com.google.play;
 
 import com.google.play.proto.*;
 import com.google.protobuf.micro.InvalidProtocolBufferMicroException;
+import com.google.tools.Base64;
 import com.google.tools.Client;
 import com.google.tools.RequestContext;
 
@@ -10,11 +11,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 public class DfeClient extends Client {
 
 	public static final String BASE_URL = "https://android.clients.google.com/fdfe/";
-	public static final String BUY_URL = BASE_URL + "buy";
+	public static final String PURCHASE_URL = BASE_URL + "purchase";
 	public static final String BROWSE_URL = BASE_URL + "browse";
 	public static final String DELIVERY_URL = BASE_URL + "delivery";
 	public static final String DETAILS_URL = BASE_URL + "details";
@@ -24,7 +26,8 @@ public class DfeClient extends Client {
 	public static final String REPLICATE_LIBRARY_URL = BASE_URL + "replicateLibrary";
 	public static final String UPLOAD_DEVICE_CONFIG_URL = BASE_URL + "uploadDeviceConfig";
 	public static final String TOC_URL = BASE_URL + "toc";
-	protected static final String REQUEST_CONTENT_TYPE = "application/x-protobuf";
+	protected static final String REQUEST_CONTENT_TYPE_PROTOBUF = "application/x-protobuf";
+	protected static final String REQUEST_CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
 	private static final String PATTERN_RFC1123 = "EEE, dd MMM yyyy HH:mm:ss zzz";
 	private static final SimpleDateFormat PATTERN_RFC1123_FORMAT = new SimpleDateFormat(PATTERN_RFC1123);
 	private DfeContext context;
@@ -33,10 +36,18 @@ public class DfeClient extends Client {
 		this.context = context;
 	}
 
-	protected void prepareConnection(HttpURLConnection connection, boolean post) {
-		if (post) {
+	protected void prepareConnection(HttpURLConnection connection, String postType) {
+		if (postType != null) {
 			super.prepareConnection(connection, false);
-			connection.setRequestProperty(REQUEST_CONTENT_TYPE_FIELD, REQUEST_CONTENT_TYPE);
+			connection.setRequestProperty(REQUEST_CONTENT_TYPE_FIELD, postType);
+			/*
+			byte[] nonce = new byte[100];
+			new Random().nextBytes(nonce);
+			try {
+				connection.setRequestProperty("X-DFE-Signature-Request", "nonce="+Base64.encodeBytes(nonce, Base64.URL_SAFE));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
 		} else {
 			connection.setUseCaches(false);
 			connection.setDoInput(true);
@@ -55,15 +66,16 @@ public class DfeClient extends Client {
 	}
 
 	// untested
-	public DfeResponse<Purchase.BuyResponse> requestBuy(String docId, int versionCode) {
-		return requestBuy(docId, 1, versionCode);
+	public DfeResponse<Purchase.PurchaseStatusResponse> requestPurchase(String docId, int versionCode) {
+		return requestPurchase(docId, 1, versionCode);
 	}
 
 	// untested
-	public DfeResponse<Purchase.BuyResponse> requestBuy(String docId, int ot, int versionCode) {
+	public DfeResponse<Purchase.PurchaseStatusResponse> requestPurchase(String docId, int ot, int versionCode) {
 		Requests.ResponseWrapper wrapper =
-				simplePostRequest(BUY_URL, ("doc=" + docId + "&ot=" + ot + "&vc=" + versionCode).getBytes());
-		return new DfeResponse<Purchase.BuyResponse>(wrapper, wrapper.getPayload().getBuyResponse());
+				simplePostRequest(PURCHASE_URL, REQUEST_CONTENT_TYPE_FORM, ("ot=" + ot + "&doc=" + docId + "&vc=" + versionCode + "&").getBytes());
+		return new DfeResponse<Purchase.PurchaseStatusResponse>(wrapper, wrapper.getPayload() != null ?
+															  wrapper.getPayload().getPurchaseStatusResponse() : null);
 	}
 
 	public DfeResponse<Unsorted.DeliveryResponse> requestDeliver(String docId, int versionCode) {
@@ -117,13 +129,13 @@ public class DfeClient extends Client {
 	}
 
 	public DfeResponse<Documents.BulkDetailsResponse> requestBulkDetails(Documents.BulkDetailsRequest request) {
-		Requests.ResponseWrapper wrapper = simplePostRequest(BULK_DETAILS_URL, request.toByteArray());
+		Requests.ResponseWrapper wrapper = simplePostRequest(BULK_DETAILS_URL, REQUEST_CONTENT_TYPE_PROTOBUF, request.toByteArray());
 		return new DfeResponse<Documents.BulkDetailsResponse>(wrapper, wrapper.getPayload().getBulkDetailsResponse());
 	}
 
 	public DfeResponse<Library.LibraryReplicationResponse> requestLibraryReplication(
 			Library.LibraryReplicationRequest request) {
-		Requests.ResponseWrapper wrapper = simplePostRequest(REPLICATE_LIBRARY_URL, request.toByteArray());
+		Requests.ResponseWrapper wrapper = simplePostRequest(REPLICATE_LIBRARY_URL, REQUEST_CONTENT_TYPE_PROTOBUF, request.toByteArray());
 		return new DfeResponse<Library.LibraryReplicationResponse>(wrapper, wrapper.getPayload()
 																				   .getLibraryReplicationResponse());
 	}
@@ -135,14 +147,14 @@ public class DfeClient extends Client {
 
 	private Requests.ResponseWrapper simpleGetRequest(String url) {
 		if (DEBUG)
-			System.out.println("GET "+url);
+			System.out.println("GET " + url);
 		HttpURLConnection connection;
 		try {
 			connection = (HttpURLConnection) new URL(url).openConnection();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		prepareConnection(connection, false);
+		prepareConnection(connection, null);
 		beforeRequest(connection);
 		byte[] bytes = readData(connection, false);
 		try {
@@ -152,7 +164,7 @@ public class DfeClient extends Client {
 		}
 	}
 
-	private Requests.ResponseWrapper simplePostRequest(String url, byte[] data) {
+	private Requests.ResponseWrapper simplePostRequest(String url, String postType, byte[] data) {
 		if (DEBUG)
 			System.out.println("POST " + url);
 		HttpURLConnection connection;
@@ -161,7 +173,7 @@ public class DfeClient extends Client {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		prepareConnection(connection, true);
+		prepareConnection(connection, postType);
 		writeData(connection, data, false);
 		byte[] bytes = readData(connection, false);
 		try {
