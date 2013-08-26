@@ -2,7 +2,6 @@ package com.google.play;
 
 import com.google.play.proto.*;
 import com.google.protobuf.micro.InvalidProtocolBufferMicroException;
-import com.google.tools.Base64;
 import com.google.tools.Client;
 import com.google.tools.RequestContext;
 
@@ -11,7 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 public class DfeClient extends Client {
 
@@ -72,10 +70,12 @@ public class DfeClient extends Client {
 
 	// untested
 	public DfeResponse<Purchase.PurchaseStatusResponse> requestPurchase(String docId, int ot, int versionCode) {
-		Requests.ResponseWrapper wrapper =
-				simplePostRequest(PURCHASE_URL, REQUEST_CONTENT_TYPE_FORM, ("ot=" + ot + "&doc=" + docId + "&vc=" + versionCode + "&").getBytes());
-		return new DfeResponse<Purchase.PurchaseStatusResponse>(wrapper, wrapper.getPayload() != null ?
-															  wrapper.getPayload().getPurchaseStatusResponse() : null);
+		DfeResponse<Purchase.PurchaseStatusResponse> response = simplePostRequest(PURCHASE_URL, REQUEST_CONTENT_TYPE_FORM,
+															 ("ot=" + ot + "&doc=" + docId + "&vc=" + versionCode + "&")
+																	 .getBytes());
+		if (response.hasWrapperPayload())
+			response.setResponse(response.getWrapper().getPayload().getPurchaseStatusResponse());
+		return response;
 	}
 
 	public DfeResponse<Unsorted.DeliveryResponse> requestDeliver(String docId, int versionCode) {
@@ -83,10 +83,11 @@ public class DfeClient extends Client {
 	}
 
 	public DfeResponse<Unsorted.DeliveryResponse> requestDeliver(String docId, int ot, int versionCode) {
-		Requests.ResponseWrapper wrapper =
+		DfeResponse<Unsorted.DeliveryResponse> response =
 				simpleGetRequest(DELIVERY_URL + "?doc=" + docId + "&ot=" + ot + "&vc=" + versionCode);
-		return new DfeResponse<Unsorted.DeliveryResponse>(wrapper, wrapper.getPayload() != null ?
-																   wrapper.getPayload().getDeliveryResponse() : null);
+		if (response.hasWrapperPayload())
+			response.setResponse(response.getWrapper().getPayload().getDeliveryResponse());
+		return response;
 	}
 
 	public DfeResponse<Unsorted.TocResponse> requestToc(String shh, String deviceConfigToken) {
@@ -118,68 +119,70 @@ public class DfeClient extends Client {
 	}
 
 	public DfeResponse<Browse.BrowseResponse> requestBrowse(String url) {
-		Requests.ResponseWrapper wrapper = simpleGetRequest(prepareUrl(url, BROWSE_URL));
-		return new DfeResponse<Browse.BrowseResponse>(wrapper, wrapper.getPayload().getBrowseResponse());
+		DfeResponse<Browse.BrowseResponse> response = simpleGetRequest(prepareUrl(url, BROWSE_URL));
+		if (response.hasWrapperPayload())
+			response.setResponse(response.getWrapper().getPayload().getBrowseResponse());
+		return response;
 	}
 
 	public DfeResponse<Documents.DetailsResponse> requestDetails(String url) {
-		Requests.ResponseWrapper wrapper =
+		DfeResponse<Documents.DetailsResponse> response =
 				simpleGetRequest(prepareUrl(url.contains("=") ? url : ("doc=" + url), DETAILS_URL));
-		return new DfeResponse<Documents.DetailsResponse>(wrapper, wrapper.getPayload().getDetailsResponse());
+		if (response.hasWrapperPayload())
+			response.setResponse(response.getWrapper().getPayload().getDetailsResponse());
+		return response;
 	}
 
 	public DfeResponse<Documents.BulkDetailsResponse> requestBulkDetails(Documents.BulkDetailsRequest request) {
-		Requests.ResponseWrapper wrapper = simplePostRequest(BULK_DETAILS_URL, REQUEST_CONTENT_TYPE_PROTOBUF, request.toByteArray());
-		return new DfeResponse<Documents.BulkDetailsResponse>(wrapper, wrapper.getPayload().getBulkDetailsResponse());
+		DfeResponse<Documents.BulkDetailsResponse> response =
+				simplePostRequest(BULK_DETAILS_URL, REQUEST_CONTENT_TYPE_PROTOBUF, request.toByteArray());
+		if (response.hasWrapperPayload())
+			response.setResponse(response.getWrapper().getPayload().getBulkDetailsResponse());
+		return response;
 	}
 
 	public DfeResponse<Library.LibraryReplicationResponse> requestLibraryReplication(
 			Library.LibraryReplicationRequest request) {
-		Requests.ResponseWrapper wrapper = simplePostRequest(REPLICATE_LIBRARY_URL, REQUEST_CONTENT_TYPE_PROTOBUF, request.toByteArray());
-		return new DfeResponse<Library.LibraryReplicationResponse>(wrapper, wrapper.getPayload()
-																				   .getLibraryReplicationResponse());
+		DfeResponse<Library.LibraryReplicationResponse> response =
+				simplePostRequest(REPLICATE_LIBRARY_URL, REQUEST_CONTENT_TYPE_PROTOBUF, request.toByteArray());
+		if (response.hasWrapperPayload())
+			response.setResponse(response.getWrapper().getPayload().getLibraryReplicationResponse());
+		return response;
 	}
 
 	public DfeResponse<Documents.ListResponse> requestSuggest(String url) {
-		Requests.ResponseWrapper wrapper = simpleGetRequest(prepareUrl(url, SUGGEST_URL));
-		return new DfeResponse<Documents.ListResponse>(wrapper, wrapper.getPayload().getListResponse());
+		DfeResponse<Documents.ListResponse> response = simpleGetRequest(prepareUrl(url, SUGGEST_URL));
+		if (response.hasWrapperPayload())
+			response.setResponse(response.getWrapper().getPayload().getListResponse());
+		return response;
 	}
 
-	private Requests.ResponseWrapper simpleGetRequest(String url) {
+	private <T> DfeResponse<T> simpleGetRequest(String url) {
 		if (DEBUG)
 			System.out.println("GET " + url);
-		HttpURLConnection connection;
 		try {
-			connection = (HttpURLConnection) new URL(url).openConnection();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		prepareConnection(connection, null);
-		beforeRequest(connection);
-		byte[] bytes = readData(connection, false);
-		try {
-			return Requests.ResponseWrapper.parseFrom(bytes);
-		} catch (InvalidProtocolBufferMicroException e) {
-			throw new RuntimeException(e);
+			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+			prepareConnection(connection, null);
+			byte[] bytes = readData(connection, false);
+			Requests.ResponseWrapper wrapper = Requests.ResponseWrapper.parseFrom(bytes);
+			return new DfeResponse<T>(wrapper, connection.getResponseCode(), connection.getResponseMessage());
+		} catch (Throwable e) {
+			return new DfeResponse<T>(e);
 		}
 	}
 
-	private Requests.ResponseWrapper simplePostRequest(String url, String postType, byte[] data) {
+	private <T> DfeResponse<T> simplePostRequest(String url, String postType, byte[] data) {
 		if (DEBUG)
 			System.out.println("POST " + url);
-		HttpURLConnection connection;
 		try {
-			connection = (HttpURLConnection) new URL(url).openConnection();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		prepareConnection(connection, postType);
-		writeData(connection, data, false);
-		byte[] bytes = readData(connection, false);
-		try {
-			return Requests.ResponseWrapper.parseFrom(bytes);
-		} catch (InvalidProtocolBufferMicroException e) {
-			throw new RuntimeException(e);
+			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+			prepareConnection(connection, postType);
+			writeData(connection, data, false);
+			byte[] bytes = readData(connection, false);
+			Requests.ResponseWrapper wrapper = Requests.ResponseWrapper.parseFrom(bytes);
+			return new DfeResponse<T>(wrapper, connection.getResponseCode(), connection.getResponseMessage());
+		} catch (Throwable e) {
+			return new DfeResponse<T>(e);
 		}
 	}
 
@@ -194,8 +197,10 @@ public class DfeClient extends Client {
 	}
 
 	public DfeResponse<Documents.ListResponse> requestList(String url) {
-		Requests.ResponseWrapper wrapper = simpleGetRequest(prepareUrl(url, LIST_URL));
-		return new DfeResponse<Documents.ListResponse>(wrapper, wrapper.getPayload().getListResponse());
+		DfeResponse<Documents.ListResponse> response = simpleGetRequest(prepareUrl(url, LIST_URL));
+		if (response.hasWrapperPayload())
+			response.setResponse(response.getWrapper().getPayload().getListResponse());
+		return response;
 	}
 
 }
