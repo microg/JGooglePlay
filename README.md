@@ -17,7 +17,7 @@ Building
 1. Download and build micro-protobuf
 2. Build protobuf-files in proto-folder
 
-		mkdir -p gen && protoc --javamicro_out=gen proto/*.proto
+		mkdir -p gen && cd proto && protoc --javamicro_out=../gen *.proto
 
 3. Download and build [JGoogle](https://github.com/microg/JGoogle)
 4. Compile src and gen folder (remember adding micro-protobuf and JGoogle to classpath)
