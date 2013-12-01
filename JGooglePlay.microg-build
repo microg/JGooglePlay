@@ -1,0 +1,3 @@
+build_typeops="protoc-micro javac java-jar"
+libs_use="protobuf-micro JGoogle"
+libs_inc=

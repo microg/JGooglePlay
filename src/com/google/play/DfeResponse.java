@@ -18,6 +18,12 @@ public class DfeResponse<ResponseType> {
 		this.throwable = throwable;
 	}
 
+	public DfeResponse(int statusCode, String statusString, Throwable throwable) {
+		this.statusCode = statusCode;
+		this.statusString = statusString;
+		this.throwable = throwable;
+	}
+
 	public DfeResponse(ResponseType response, Requests.ResponseWrapper wrapper, int statusCode, String statusString) {
 		this.response = response;
 		this.wrapper = wrapper;
