@@ -23,13 +23,15 @@ message GetCategoriesResponseProto {
 	repeated CategoryProto categories = 1;
 }
 
+message SubCategoryProto {
+	optional string subCategoryDisplay = 2;
+	optional string subCategoryId = 3;
+}
+
 message GetSubCategoriesRequestProto {
 	optional int32 assetType = 1;
 }
 
 message GetSubCategoriesResponseProto {
-	repeated group SubCategory = 1 {
-		optional string subCategoryDisplay = 2;
-		optional string subCategoryId = 3;
-	}
+	repeated SubCategoryProto subCategory = 1;
 }

@@ -34,19 +34,23 @@ message GetImageResponseProto {
 	optional int32 imageDensity = 2;
 }
 
+message DimensionProto {
+	optional int32 width = 3;
+	optional int32 height = 4;
+}
+
+message CitationProto {
+	optional string titleLocalized = 11;
+	optional string url = 12;
+}
+
 message Image {
 	optional int32 imageType = 1;
-	optional group Dimension = 2 {
-		optional int32 width = 3;
-		optional int32 height = 4;
-	}
+	optional DimensionProto dimension = 2;
 	optional string imageUrl = 5;
 	optional string altTextLocalized = 6;
 	optional string secureUrl = 7;
 	optional int32 positionInSequence = 8;
 	optional bool supportsFifeUrlOptions = 9;
-	optional group Citation = 10 {
-		optional string titleLocalized = 11;
-		optional string url = 12;
-	}
+	optional CitationProto citation = 10;
 }

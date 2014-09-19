@@ -1,16 +1,19 @@
 option java_package = "com.google.play.proto";
 option java_outer_classname = "Offers";
 
+/*message PerDeviceAvailabilityRestrictionProto {
+	optional fixed64 androidId = 10;
+	optional int32 deviceRestriction = 11;
+	optional int64 channelId = 12;
+	optional FilterEvaluationInfo filterInfo = 15;
+}*/
+
+
 message Availability {
 	optional int32 restriction = 5;
 	optional int32 offerType = 6;
 	optional Rule rule = 7;
-	repeated group PerDeviceAvailabilityRestriction = 9 {
-		optional fixed64 androidId = 10;
-		optional int32 deviceRestriction = 11;
-		optional int64 channelId = 12;
-		optional FilterEvaluationInfo filterInfo = 15;
-	}
+//	repeated PerDeviceAvailabilityRestrictionProto perDeviceAvailabilityRestriction = 9;
 	optional bool availableIfOwned = 13;
 	repeated Install install = 14;
 	optional FilterEvaluationInfo filterInfo = 16;

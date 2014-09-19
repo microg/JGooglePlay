@@ -70,48 +70,46 @@ message RequestPropertiesProto {
 	optional string loggingId = 13;
 }
 
+message InnerRequestProto {
+	optional RequestSpecificPropertiesProto requestSpecificProperties = 3;
+	optional AssetsRequestProto assetRequest = 4;
+	optional CommentsRequestProto commentsRequest = 5;
+	optional ModifyCommentRequestProto modifyCommentRequest = 6;
+	optional PurchasePostRequestProto purchasePostRequest = 7;
+	optional PurchaseOrderRequestProto purchaseOrderRequest = 8;
+	optional ContentSyncRequestProto contentSyncRequest = 9;
+	optional GetAssetRequestProto getAssetRequest = 10;
+	optional GetImageRequestProto getImageRequest = 11;
+	optional RefundRequestProto refundRequest = 12;
+	optional PurchaseMetadataRequestProto purchaseMetadataRequest = 13;
+	optional GetSubCategoriesRequestProto subCategoriesRequest = 14;
+	optional UninstallReasonRequestProto uninstallReasonRequest = 16;
+	optional RateCommentRequestProto rateCommentRequest = 17;
+	optional CheckLicenseRequestProto checkLicenseRequest = 18;
+	optional GetMarketMetadataRequestProto getMarketMetadataRequest = 19;
+	optional GetCategoriesRequestProto getCategoriesRequest = 21;
+	optional GetCarrierInfoRequestProto getCarrierInfoRequest = 22;
+	optional RemoveAssetRequestProto removeAssetRequest = 23;
+	optional RestoreApplicationsRequestProto restoreApplicationsRequest = 24;
+	optional QuerySuggestionRequestProto querySuggestionRequest = 25;
+	optional BillingEventRequestProto billingEventRequest = 26;
+	optional PaypalPreapprovalRequestProto paypalPreapprovalRequest = 27;
+	optional PaypalPreapprovalDetailsRequestProto paypalPreapprovalDetailsRequest = 28;
+	optional PaypalCreateAccountRequestProto paypalCreateAccountRequest = 29;
+	optional PaypalPreapprovalCredentialsRequestProto paypalPreapprovalCredentialsRequest = 30;
+	optional InAppRestoreTransactionsRequestProto inAppRestoreTransactionsRequest = 31;
+	optional InAppPurchaseInformationRequestProto inAppPurchaseInformationRequest = 32;
+	optional CheckForNotificationsRequestProto checkForNotificationsRequest = 33;
+	optional AckNotificationsRequestProto ackNotificationsRequest = 34;
+	optional PurchaseProductRequestProto purchaseProductRequest = 35;
+	optional ReconstructDatabaseRequestProto reconstructDatabaseRequest = 36;
+	optional PaypalMassageAddressRequestProto paypalMassageAddressRequest = 37;
+	optional GetAddressSnippetRequestProto getAddressSnippetRequest = 38;
+}
+
 message RequestProto {
 	optional RequestPropertiesProto requestProperties = 1;
-	repeated group Request = 2 {
-		optional RequestSpecificPropertiesProto requestSpecificProperties = 3;
-		optional AssetsRequestProto assetRequest = 4;
-		optional CommentsRequestProto commentsRequest = 5;
-		optional ModifyCommentRequestProto modifyCommentRequest = 6;
-		optional PurchasePostRequestProto purchasePostRequest = 7;
-		optional PurchaseOrderRequestProto purchaseOrderRequest = 8;
-		optional ContentSyncRequestProto contentSyncRequest = 9;
-		optional GetAssetRequestProto getAssetRequest = 10;
-		optional GetImageRequestProto getImageRequest = 11;
-		optional RefundRequestProto refundRequest = 12;
-		optional PurchaseMetadataRequestProto purchaseMetadataRequest = 13;
-		optional GetSubCategoriesRequestProto subCategoriesRequest = 14;
-		optional UninstallReasonRequestProto uninstallReasonRequest = 16;
-		optional RateCommentRequestProto rateCommentRequest = 17;
-		optional CheckLicenseRequestProto checkLicenseRequest = 18;
-		optional GetMarketMetadataRequestProto getMarketMetadataRequest = 19;
-		optional GetCategoriesRequestProto getCategoriesRequest = 21;
-		optional GetCarrierInfoRequestProto getCarrierInfoRequest = 22;
-		optional RemoveAssetRequestProto removeAssetRequest = 23;
-		optional RestoreApplicationsRequestProto restoreApplicationsRequest = 24;
-		optional QuerySuggestionRequestProto querySuggestionRequest = 25;
-		optional BillingEventRequestProto billingEventRequest = 26;
-		optional PaypalPreapprovalRequestProto paypalPreapprovalRequest = 27;
-		optional PaypalPreapprovalDetailsRequestProto
-		paypalPreapprovalDetailsRequest = 28;
-		optional PaypalCreateAccountRequestProto paypalCreateAccountRequest = 29;
-		optional PaypalPreapprovalCredentialsRequestProto
-		paypalPreapprovalCredentialsRequest = 30;
-		optional InAppRestoreTransactionsRequestProto
-		inAppRestoreTransactionsRequest = 31;
-		optional InAppPurchaseInformationRequestProto
-		inAppPurchaseInformationRequest = 32;
-		optional CheckForNotificationsRequestProto checkForNotificationsRequest = 33;
-		optional AckNotificationsRequestProto ackNotificationsRequest = 34;
-		optional PurchaseProductRequestProto purchaseProductRequest = 35;
-		optional ReconstructDatabaseRequestProto reconstructDatabaseRequest = 36;
-		optional PaypalMassageAddressRequestProto paypalMassageAddressRequest = 37;
-		optional GetAddressSnippetRequestProto getAddressSnippetRequest = 38;
-	}
+	repeated InnerRequestProto request = 2;
 }
 
 message RequestSpecificPropertiesProto {
@@ -128,48 +126,45 @@ message ResponsePropertiesProto {
 	repeated InputValidationError errorInputField = 8;
 }
 
+message InnerResponseProto {
+	optional ResponsePropertiesProto responseProperties = 2;
+	optional AssetsResponseProto assetsResponse = 3;
+	optional CommentsResponseProto commentsResponse = 4;
+	optional ModifyCommentResponseProto modifyCommentResponse = 5;
+	optional PurchasePostResponseProto purchasePostResponse = 6;
+	optional PurchaseOrderResponseProto purchaseOrderResponse = 7;
+	optional ContentSyncResponseProto contentSyncResponse = 8;
+	optional GetAssetResponseProto getAssetResponse = 9;
+	optional GetImageResponseProto getImageResponse = 10;
+	optional RefundResponseProto refundResponse = 11;
+	optional PurchaseMetadataResponseProto purchaseMetadataResponse = 12;
+	optional GetSubCategoriesResponseProto subCategoriesResponse = 13;
+	optional UninstallReasonResponseProto uninstallReasonResponse = 15;
+	optional RateCommentResponseProto rateCommentResponse = 16;
+	optional CheckLicenseResponseProto checkLicenseResponse = 17;
+	optional GetMarketMetadataResponseProto getMarketMetadataResponse = 18;
+	repeated PrefetchedBundleProto prefetchedBundle = 19;
+	optional GetCategoriesResponseProto getCategoriesResponse = 20;
+	optional GetCarrierInfoResponseProto getCarrierInfoResponse = 21;
+	optional RestoreApplicationsResponseProto restoreApplicationResponse = 23;
+	optional QuerySuggestionResponseProto querySuggestionResponse = 24;
+	optional BillingEventResponseProto billingEventResponse = 25;
+	optional PaypalPreapprovalResponseProto paypalPreapprovalResponse = 26;
+	optional PaypalPreapprovalDetailsResponseProto paypalPreapprovalDetailsResponse = 27;
+	optional PaypalCreateAccountResponseProto paypalCreateAccountResponse = 28;
+	optional PaypalPreapprovalCredentialsResponseProto paypalPreapprovalCredentialsResponse = 29;
+	optional InAppRestoreTransactionsResponseProto inAppRestoreTransactionsResponse = 30;
+	optional InAppPurchaseInformationResponseProto inAppPurchaseInformationResponse = 31;
+	optional CheckForNotificationsResponseProto checkForNotificationsResponse = 32;
+	optional AckNotificationsResponseProto ackNotificationsResponse = 33;
+	optional PurchaseProductResponseProto purchaseProductResponse = 34;
+	optional ReconstructDatabaseResponseProto reconstructDatabaseResponse = 35;
+	optional PaypalMassageAddressResponseProto paypalMassageAddressResponse = 36;
+	optional GetAddressSnippetResponseProto getAddressSnippetResponse = 37;
+}
+
 message ResponseProto {
-	repeated group Response = 1 {
-		optional ResponsePropertiesProto responseProperties = 2;
-		optional AssetsResponseProto assetsResponse = 3;
-		optional CommentsResponseProto commentsResponse = 4;
-		optional ModifyCommentResponseProto modifyCommentResponse = 5;
-		optional PurchasePostResponseProto purchasePostResponse = 6;
-		optional PurchaseOrderResponseProto purchaseOrderResponse = 7;
-		optional ContentSyncResponseProto contentSyncResponse = 8;
-		optional GetAssetResponseProto getAssetResponse = 9;
-		optional GetImageResponseProto getImageResponse = 10;
-		optional RefundResponseProto refundResponse = 11;
-		optional PurchaseMetadataResponseProto purchaseMetadataResponse = 12;
-		optional GetSubCategoriesResponseProto subCategoriesResponse = 13;
-		optional UninstallReasonResponseProto uninstallReasonResponse = 15;
-		optional RateCommentResponseProto rateCommentResponse = 16;
-		optional CheckLicenseResponseProto checkLicenseResponse = 17;
-		optional GetMarketMetadataResponseProto getMarketMetadataResponse = 18;
-		repeated PrefetchedBundleProto prefetchedBundle = 19;
-		optional GetCategoriesResponseProto getCategoriesResponse = 20;
-		optional GetCarrierInfoResponseProto getCarrierInfoResponse = 21;
-		optional RestoreApplicationsResponseProto restoreApplicationResponse = 23;
-		optional QuerySuggestionResponseProto querySuggestionResponse = 24;
-		optional BillingEventResponseProto billingEventResponse = 25;
-		optional PaypalPreapprovalResponseProto paypalPreapprovalResponse = 26;
-		optional PaypalPreapprovalDetailsResponseProto
-		paypalPreapprovalDetailsResponse = 27;
-		optional PaypalCreateAccountResponseProto paypalCreateAccountResponse = 28;
-		optional PaypalPreapprovalCredentialsResponseProto
-		paypalPreapprovalCredentialsResponse = 29;
-		optional InAppRestoreTransactionsResponseProto
-		inAppRestoreTransactionsResponse = 30;
-		optional InAppPurchaseInformationResponseProto
-		inAppPurchaseInformationResponse = 31;
-		optional CheckForNotificationsResponseProto
-		checkForNotificationsResponse = 32;
-		optional AckNotificationsResponseProto ackNotificationsResponse = 33;
-		optional PurchaseProductResponseProto purchaseProductResponse = 34;
-		optional ReconstructDatabaseResponseProto reconstructDatabaseResponse = 35;
-		optional PaypalMassageAddressResponseProto paypalMassageAddressResponse = 36;
-		optional GetAddressSnippetResponseProto getAddressSnippetResponse = 37;
-	}
+	repeated InnerResponseProto Response = 1;
 	optional PendingNotificationsProto pendingNotifications = 38;
 }
 

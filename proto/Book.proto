@@ -9,6 +9,11 @@ message BookAuthor {
 	optional Docid docid = 3;
 }
 
+message IdentifierProto {
+	optional int32 type = 19;
+	optional string identifier = 20;
+}
+
 message BookDetails {
 	repeated BookSubject subject = 3;
 	optional string publisher = 4;
@@ -25,10 +30,7 @@ message BookDetails {
 	optional bool epubAvailable = 15;
 	optional bool pdfAvailable = 16;
 	optional string aboutTheAuthor = 17;
-	repeated group Identifier = 18 {
-		optional int32 type = 19;
-		optional string identifier = 20;
-	}
+	repeated IdentifierProto identifier = 18;
 }
 
 message BookSubject {

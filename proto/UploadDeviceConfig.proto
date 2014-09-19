@@ -1,0 +1,14 @@
+option java_package = "com.google.play.proto";
+option java_outer_classname = "UploadDeviceConfig";
+
+include "Unsorted.proto";
+
+message UploadDeviceConfigRequest {
+	optional DeviceConfig deviceConfiguration = 1;
+	optional string manufacturer = 2;
+	optional string gcmRegistrationId = 3;
+}
+
+message UploadDeviceConfigResponse {
+	optional string uploadDeviceConfigToken = 1;
+}

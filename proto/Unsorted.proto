@@ -47,7 +47,6 @@ message DeviceConfig {
 	optional int32 heightPixels = 13;
 	repeated string locale = 14;
 	repeated string glExtension = 15;
-	optional int32 deviceClass = 16;
 	optional int32 maxApkDownloadSizeMb = 17;
 }
 
@@ -116,22 +115,26 @@ message CheckLicenseResponseProto {
 	optional string signature = 3;
 }
 
+message AssetInstallStateProto {
+	optional string assetId = 3;
+	optional int32 assetState = 4;
+	optional int64 installTime = 5;
+	optional int64 uninstallTime = 6;
+	optional string packageName = 7;
+	optional int32 versionCode = 8;
+	optional string assetReferrer = 9;
+}
+
+message SystemAppProto {
+	optional string packageName = 11;
+	optional int32 versionCode = 12;
+	repeated string certificateHash = 13;
+}
+
 message ContentSyncRequestProto {
 	optional bool incremental = 1;
-	repeated group AssetInstallState = 2 {
-		optional string assetId = 3;
-		optional int32 assetState = 4;
-		optional int64 installTime = 5;
-		optional int64 uninstallTime = 6;
-		optional string packageName = 7;
-		optional int32 versionCode = 8;
-		optional string assetReferrer = 9;
-	}
-	repeated group SystemApp = 10 {
-		optional string packageName = 11;
-		optional int32 versionCode = 12;
-		repeated string certificateHash = 13;
-	}
+	repeated AssetInstallStateProto AssetInstallState = 2;
+	repeated SystemAppProto SystemApp = 10;
 	optional int32 sideloadedAppCount = 14;
 }
 

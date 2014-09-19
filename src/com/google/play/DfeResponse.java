@@ -1,15 +1,16 @@
 package com.google.play;
 
-import com.google.play.proto.Notifications;
-import com.google.play.proto.Requests;
-import com.google.play.proto.Unsorted;
+import com.google.play.proto.Notification;
+import com.google.play.proto.PreFetch;
+import com.google.play.proto.ResponseWrapper;
+import com.google.play.proto.ServerCommands;
 
 import java.util.Collections;
 import java.util.List;
 
 public class DfeResponse<ResponseType> {
 	private ResponseType response;
-	private Requests.ResponseWrapper wrapper;
+	private ResponseWrapper wrapper;
 	private int statusCode;
 	private String statusString;
 	private Throwable throwable;
@@ -24,7 +25,7 @@ public class DfeResponse<ResponseType> {
 		this.throwable = throwable;
 	}
 
-	public DfeResponse(ResponseType response, Requests.ResponseWrapper wrapper, int statusCode, String statusString) {
+	public DfeResponse(ResponseType response, ResponseWrapper wrapper, int statusCode, String statusString) {
 		this.response = response;
 		this.wrapper = wrapper;
 		this.statusCode = statusCode;
@@ -36,12 +37,12 @@ public class DfeResponse<ResponseType> {
 		this.statusString = statusString;
 	}
 
-	public DfeResponse(Requests.ResponseWrapper wrapper, ResponseType response) {
+	public DfeResponse(ResponseWrapper wrapper, ResponseType response) {
 		this.wrapper = wrapper;
 		this.response = response;
 	}
 
-	public DfeResponse(Requests.ResponseWrapper wrapper, int statusCode, String statusString) {
+	public DfeResponse(ResponseWrapper wrapper, int statusCode, String statusString) {
 		this.wrapper = wrapper;
 		this.statusCode = statusCode;
 		this.statusString = statusString;
@@ -67,19 +68,19 @@ public class DfeResponse<ResponseType> {
 		this.response = response;
 	}
 
-	public Unsorted.ServerCommands getCommands() {
-		return wrapper != null ? wrapper.getCommands() : null;
+	public ServerCommands getCommands() {
+		return wrapper != null ? wrapper.commands : null;
 	}
 
-	public List<Notifications.Notification> getNotifications() {
-		return wrapper != null ? wrapper.getNotificationList() : Collections.<Notifications.Notification>emptyList();
+	public List<Notification> getNotifications() {
+		return wrapper != null ? wrapper.notification : Collections.<Notification>emptyList();
 	}
 
-	public List<Requests.PreFetch> getPreFetches() {
-		return wrapper != null ? wrapper.getPreFetchList() : Collections.<Requests.PreFetch>emptyList();
+	public List<PreFetch> getPreFetches() {
+		return wrapper != null ? wrapper.preFetch : Collections.<PreFetch>emptyList();
 	}
 
-	Requests.ResponseWrapper getWrapper() {
+	ResponseWrapper getWrapper() {
 		return wrapper;
 	}
 
@@ -88,6 +89,17 @@ public class DfeResponse<ResponseType> {
 	}
 
 	boolean hasWrapperPayload() {
-		return wrapper != null && wrapper.getPayload() != null;
+		return wrapper != null && wrapper.payload != null;
 	}
+
+    @Override
+    public String toString() {
+        return "DfeResponse{" +
+                "response=" + response +
+                ", wrapper=" + wrapper +
+                ", statusCode=" + statusCode +
+                ", statusString='" + statusString + '\'' +
+                ", throwable=" + throwable +
+                '}';
+    }
 }

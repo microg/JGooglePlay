@@ -49,11 +49,11 @@ message BulkDetailsResponse {
 }
 
 message DetailsResponse {
-	optional DocV1 docV1 = 1;
-	optional string analyticsCookie = 2;
-	optional Review userReview = 3;
+	//optional DocV1 docV1 = 1;
+	//optional string analyticsCookie = 2;
+	//optional Review userReview = 3;
 	optional DocV2 docV2 = 4;
-	optional string footerHtml = 5;
+	//optional string footerHtml = 5;
 }
 
 message Bucket {
@@ -153,7 +153,7 @@ message DocV1 {
 
 message DocV2 {
 	optional string docid = 1;
-	optional string backendDocid = 2;
+	/*optional string backendDocid = 2;
 	optional int32 docType = 3;
 	optional int32 backendId = 4;
 	optional string title = 5;
@@ -163,9 +163,9 @@ message DocV2 {
 	optional Availability availability = 9;
 	repeated Image image = 10;
 	repeated DocV2 child = 11;
-	optional ContainerMetadata containerMetadata = 12;
+	optional ContainerMetadata containerMetadata = 12;*/
 	optional DocumentDetails details = 13;
-	optional AggregateRating aggregateRating = 14;
+	/*optional AggregateRating aggregateRating = 14;
 	optional Annotations annotations = 15;
 	optional string detailsUrl = 16;
 	optional string shareUrl = 17;
@@ -173,7 +173,7 @@ message DocV2 {
 	optional string backendUrl = 19;
 	optional string purchaseDetailsUrl = 20;
 	optional bool detailsReusable = 21;
-	optional string subtitle = 22;
+	optional string subtitle = 22;*/
 }
 
 message Link {

@@ -50,23 +50,25 @@ message GetAssetRequestProto {
 	optional string directDownloadKey = 2;
 }
 
+message InstallAssetProto {
+	optional string assetId = 2;
+	optional string assetName = 3;
+	optional int32 assetType = 4;
+	optional string assetPackage = 5;
+	optional string blobUrl = 6;
+	optional string assetSignature = 7;
+	optional int64 assetSize = 8;
+	optional int64 refundTimeoutMillis = 9;
+	optional bool forwardLocked = 10;
+	optional bool secured = 11;
+	optional int32 versionCode = 12;
+	optional string downloadAuthCookieName = 13;
+	optional string downloadAuthCookieValue = 14;
+	optional int64 postInstallRefundWindowMillis = 16;
+}
+
 message GetAssetResponseProto {
-	optional group InstallAsset = 1 {
-		optional string assetId = 2;
-		optional string assetName = 3;
-		optional int32 assetType = 4;
-		optional string assetPackage = 5;
-		optional string blobUrl = 6;
-		optional string assetSignature = 7;
-		optional int64 assetSize = 8;
-		optional int64 refundTimeoutMillis = 9;
-		optional bool forwardLocked = 10;
-		optional bool secured = 11;
-		optional int32 versionCode = 12;
-		optional string downloadAuthCookieName = 13;
-		optional string downloadAuthCookieValue = 14;
-		optional int64 postInstallRefundWindowMillis = 16;
-	}
+	optional InstallAssetProto installAsset = 1;
 	repeated FileMetadataProto additionalFile = 15;
 }
 

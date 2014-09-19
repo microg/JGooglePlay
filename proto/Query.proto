@@ -14,11 +14,13 @@ message QuerySuggestionRequestProto {
 	optional int32 requestType = 2;
 }
 
+message SuggestionProto {
+	optional AppSuggestionProto appSuggestion = 2;
+	optional QuerySuggestionProto querySuggestion = 3;
+}
+
 message QuerySuggestionResponseProto {
-	repeated group Suggestion = 1 {
-		optional AppSuggestionProto appSuggestion = 2;
-		optional QuerySuggestionProto querySuggestion = 3;
-	}
+	repeated SuggestionProto suggestion = 1;
 	optional int32 estimatedNumAppSuggestions = 4;
 	optional int32 estimatedNumQuerySuggestions = 5;
 }

@@ -26,12 +26,14 @@ message VideoDetails {
 	repeated VideoRentalTerm rentalTerm = 9;
 }
 
+message TermProto {
+	optional string header = 5;
+	optional string body = 6;
+}
+
 message VideoRentalTerm {
 	optional int32 offerType = 1;
 	optional string offerAbbreviation = 2;
 	optional string rentalHeader = 3;
-	repeated group Term = 4 {
-		optional string header = 5;
-		optional string body = 6;
-	}
+	repeated TermProto Term = 4;
 }
