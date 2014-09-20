@@ -26,6 +26,7 @@ import "Reviews.proto";
 import "Search.proto";
 import "Uninstall.proto";
 import "Unsorted.proto";
+import "UploadDeviceConfig.proto";
 
 message Payload {
 	optional ListResponse listResponse = 1;
@@ -52,6 +53,8 @@ message Payload {
 	optional AcceptTosResponse acceptTosResponse = 22;
 	optional RateSuggestedContentResponse rateSuggestedContentResponse = 23;
 	optional CheckPromoOfferResponse checkPromoOfferResponse = 24;
+
+	optional UploadDeviceConfigResponse uploadDeviceConfigResponse = 28;
 }
 
 message RequestPropertiesProto {
