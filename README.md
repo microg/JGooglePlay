@@ -3,24 +3,11 @@ JGoogle
 
 An inofficial Google PlayStore Client library. Part of μg Project.
 
-Used Libs
----------
-This project makes use of the following external projects:
-* [Google's micro-protobuf Library](http://code.google.com/p/micro-protobuf/)
-  
-	> License: [New BSD License](http://opensource.org/licenses/BSD-3-Clause)
-	
-	> Source: http://micro-protobuf.googlecode.com/svn/trunk/
-
 Building
 --------
-1. Download and build micro-protobuf
-2. Build protobuf-files in proto-folder
-
-		mkdir -p gen && cd proto && protoc --javamicro_out=../gen *.proto
-
-3. Download and build [JGoogle](https://github.com/microg/JGoogle)
-4. Compile src and gen folder (remember adding micro-protobuf and JGoogle to classpath)
+### Using AOSP Build system
+1. Add JGooglePlay to the build system (e.g. as external/JGooglePlay)
+2. Build using `make JGooglePlay`
 
 License
 -------
